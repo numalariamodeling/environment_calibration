@@ -1,2 +1,10 @@
 site,init_size,init_batches,batch_size,max_eval,failure_limit,success_limit
-Nanoro,25,1,25,400,2,8
+Siaya,100,1,100,1000,2,8
+Aiyedade,10,1,10,20,2,8
+Obokun,100,1,100,1000,2,8
+Iwo,100,1,100,1000,2,8
+Atakumosa West,100,1,100,200,2,8
+Irewole,100,1,100,1000,2,8
+Ede South,100,1,100,1000,2,8
+Ife North,100,1,100,1000,2,8
+Egbedore,100,1,100,1000,2,8
