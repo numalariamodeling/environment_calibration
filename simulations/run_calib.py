@@ -193,13 +193,16 @@ bo.run()
 
 ##### Post-calibration steps
 
-# Run analysis
+# This section calls on the overall post_calibration_analysis pipeline, and
+# will only run once the max_eval limit has been reached in the fitting
+# process. By default, all relevant steps are included
 
 post_calibration_analysis(experiment=exp_label,
-                          length_scales_by_objective=True,      # Fit single-task GP per site-metric
-                          length_scales_plot=True,              # Plot length-scales from calibration
-                          prediction_plot=True,                 # Plot predictions, starting @ exclude_count
+                          length_scales_by_objective=False,           # Fit single-task GP per site-metric (within-host only)
+                          length_scales_by_environment_objective=True,# Fit single-task GP per score_type  (environment only)
+                          length_scales_plot=True,                    # Plot length-scales for overall score
+                          prediction_plot=True,                       # Plot predictions, starting @ exclude_count
                           exclude_count=init_samples,
-                          timer_plot=True)                      # Plot emulator and acquisition timing
+                          timer_plot=True)                            # Plot emulator and acquisition timing
 
 

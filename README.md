@@ -36,44 +36,182 @@ git clone <ssh path to your fork of the repository> --recursive
 
 <br> To start, create a virtual environment containing botorch, idmtools, emodpy, and other required packages.
 
-For Quest users, you can build an environment based off of the existing \<emodpy-torch\> environment.
+**Example:** Creating an environment named `pytorch_test` inside my home directory `my_environments` folder
 
 ``` bash
-# clone conda-compatible parts of existing virtual environment
-conda create --prefix <path/to/env> --name <YOUR_ENVIRONMENT> --clone /projects/b1139/environments/emodpy-torch
+module purge all
+module load mamba
+mamba create --prefix=/home/tmh6260/my_environments/pytorch_test -c conda-forge pytorch=1.11[build=cuda112*] numpy python=3.9 cudatoolkit=11.2
+```
+Running the three lines above will produce the following output:
+
+```bash
+
+                  __    __    __    __
+                 /  \  /  \  /  \  /  \
+                /    \/    \/    \/    \
+███████████████/  /██/  /██/  /██/  /████████████████████████
+              /  / \   / \   / \   / \  \____
+             /  /   \_/   \_/   \_/   \    o \__,
+            / _/                       \_____/  `
+            |/
+        ███╗   ███╗ █████╗ ███╗   ███╗██████╗  █████╗
+        ████╗ ████║██╔══██╗████╗ ████║██╔══██╗██╔══██╗
+        ██╔████╔██║███████║██╔████╔██║██████╔╝███████║
+        ██║╚██╔╝██║██╔══██║██║╚██╔╝██║██╔══██╗██╔══██║
+        ██║ ╚═╝ ██║██║  ██║██║ ╚═╝ ██║██████╔╝██║  ██║
+        ╚═╝     ╚═╝╚═╝  ╚═╝╚═╝     ╚═╝╚═════╝ ╚═╝  ╚═╝
+
+        mamba (1.4.2) supported by @QuantStack
+
+        GitHub:  https://github.com/mamba-org/mamba
+        Twitter: https://twitter.com/QuantStack
+
+█████████████████████████████████████████████████████████████
+
+
+Looking for: ['pytorch=1.11[build=cuda112*]', 'numpy', 'python=3.9', 'cudatoolkit=11.2']
+
+error    libmamba Could not open lockfile '/hpc/software/mamba/23.1.0/pkgs/cache/cache.lock'
+error    libmamba Could not open lockfile '/hpc/software/mamba/23.1.0/pkgs/cache/cache.lock'
+warning  libmamba Could not parse state file: Could not load cache state: [json.exception.type_error.302] type must be string, but is null
+warning  libmamba Could not remove state file "/hpc/software/mamba/23.1.0/pkgs/cache/09cdf8bf.state.json": Permission denied
+conda-forge/noarch                                  19.8MB @   4.9MB/s  4.4s
+conda-forge/linux-64                                46.3MB @   4.6MB/s 10.6s
+Transaction
+
+  Prefix: /home/tmh6260/my_environments/pytorch_test
+
+  Updating specs:
+
+   - pytorch=1.11[build=cuda112*]
+   - numpy
+   - python=3.9
+   - cudatoolkit=11.2
+
+
+  Package                Version  Build                  Channel                    Size
+──────────────────────────────────────────────────────────────────────────────────────────
+  Install:
+──────────────────────────────────────────────────────────────────────────────────────────
+
+  + _libgcc_mutex            0.1  conda_forge            conda-forge/linux-64     Cached
+  + _openmp_mutex            4.5  2_kmp_llvm             conda-forge/linux-64     Cached
+  + bzip2                  1.0.8  h4bc722e_7             conda-forge/linux-64     Cached
+  + ca-certificates    2024.8.30  hbcca054_0             conda-forge/linux-64     Cached
+  + cffi                  1.17.1  py39h15c3d72_0         conda-forge/linux-64     Cached
+  + cuda-version            11.2  hb11dac2_3             conda-forge/noarch       Cached
+  + cudatoolkit           11.2.2  hc23eb0c_13            conda-forge/linux-64     Cached
+  + cudnn               8.9.7.29  hbc23b4c_3             conda-forge/linux-64     Cached
+  + ld_impl_linux-64        2.43  h712a8e2_2             conda-forge/linux-64      669kB
+  + libblas                3.9.0  16_linux64_mkl         conda-forge/linux-64     Cached
+  + libcblas               3.9.0  16_linux64_mkl         conda-forge/linux-64     Cached
+  + libffi                 3.4.2  h7f98852_5             conda-forge/linux-64     Cached
+  + libgcc                14.2.0  h77fa898_1             conda-forge/linux-64      849kB
+  + libgcc-ng             14.2.0  h69a702a_1             conda-forge/linux-64       54kB
+  + libhwloc              2.11.1  default_hecaa2ac_1000  conda-forge/linux-64     Cached
+  + libiconv                1.17  hd590300_2             conda-forge/linux-64     Cached
+  + liblapack              3.9.0  16_linux64_mkl         conda-forge/linux-64     Cached
+  + libnsl                 2.0.1  hd590300_0             conda-forge/linux-64     Cached
+  + libprotobuf           3.20.3  h3eb15da_0             conda-forge/linux-64     Cached
+  + libsqlite             3.47.0  hadc24fc_1             conda-forge/linux-64      875kB
+  + libstdcxx             14.2.0  hc0a3c3a_1             conda-forge/linux-64        4MB
+  + libstdcxx-ng          14.2.0  h4852527_1             conda-forge/linux-64       54kB
+  + libuuid               2.38.1  h0b41bf4_0             conda-forge/linux-64     Cached
+  + libxcrypt             4.4.36  hd590300_1             conda-forge/linux-64     Cached
+  + libxml2               2.13.4  h064dc61_2             conda-forge/linux-64      689kB
+  + libzlib                1.3.1  hb9d3cd8_2             conda-forge/linux-64       61kB
+  + llvm-openmp           19.1.3  h024ca30_0             conda-forge/linux-64        3MB
+  + magma                  2.5.4  hc72dce7_4             conda-forge/linux-64     Cached
+  + mkl                 2022.2.1  h6508926_16999         conda-forge/linux-64     Cached
+  + nccl                2.23.4.1  h03a54cd_2             conda-forge/linux-64      134MB
+  + ncurses                  6.5  he02047a_1             conda-forge/linux-64     Cached
+  + ninja                 1.12.1  h297d8ca_0             conda-forge/linux-64     Cached
+  + numpy                 1.26.4  py39h474f0d3_0         conda-forge/linux-64     Cached
+  + openssl                3.3.2  hb9d3cd8_0             conda-forge/linux-64     Cached
+  + pip                   24.3.1  pyh8b19718_0           conda-forge/noarch          1MB
+  + pycparser               2.22  pyhd8ed1ab_0           conda-forge/noarch       Cached
+  + python                3.9.20  h13acc7a_1_cpython     conda-forge/linux-64       24MB
+  + python_abi               3.9  5_cp39                 conda-forge/linux-64     Cached
+  + pytorch               1.11.0  cuda112py39ha0cca9b_1  conda-forge/linux-64     Cached
+  + readline                 8.2  h8228510_1             conda-forge/linux-64     Cached
+  + setuptools            75.3.0  pyhd8ed1ab_0           conda-forge/noarch        780kB
+  + sleef                    3.7  h1b44611_0             conda-forge/linux-64        2MB
+  + tbb                2021.13.0  h84d6215_0             conda-forge/linux-64     Cached
+  + tk                    8.6.13  noxft_h4845f30_101     conda-forge/linux-64     Cached
+  + typing_extensions     4.12.2  pyha770c72_0           conda-forge/noarch       Cached
+  + tzdata                 2024b  hc8b5060_0             conda-forge/noarch        122kB
+  + wheel                 0.44.0  pyhd8ed1ab_0           conda-forge/noarch       Cached
+  + xz                     5.2.6  h166bdaf_0             conda-forge/linux-64     Cached
+
+  Summary:
+
+  Install: 48 packages
+
+  Total download: 172MB
+
+──────────────────────────────────────────────────────────────────────────────────────────
+
+
+Confirm changes: [Y/n] **Y**
 ```
 
--   The suggested path/to/env for Quest users is /projects/b1139/environments
-
-    -   Otherwise, the environment will be created in your current working directory, in a new folder called .conda/envs/
-
--   **Make sure YOUR_ENVIRONMENT is a unique name that doesn't already exist in the folder**
-
-The previous step clones all conda-compatible parts of the virtual environment. It can take a while, but you can expect some terminal output along the way...
+When the prompt appears asking you to Confirm changes: [Y/n]. **Enter 'Y'**
 
 ``` bash
-Source:      /projects/b1139/environments/emodpy-torch 
-Destination: /projects/b1139/environments/.conda/envs/<YOUR_ENVIRONMENT> 
-Packages: 50 Files: 26196 
-Downloading and Extracting Packages 
-Preparing transaction: done 
-Verifying transaction: done 
-Executing transaction: done 
-# By downloading and using the cuDNN conda packages, you accept the terms and conditions 
-# of the NVIDIA cuDNN EULA - https://docs.nvidia.com/deeplearning/cudnn/sla/index.html # 
-# To activate this environment, use 
-#     $ conda activate test_torch 
-# To deactivate an active environment, use 
-#     $ conda deactivate
+libzlib                                             61.0kB @ 214.5kB/s  0.3s
+
+Downloading and Extracting Packages
+tzdata                                             122.4kB @ 273.1kB/s  0.1s
+Preparing transaction: done
+Verifying transaction: done━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 171.6MB / 171.6MB                            2.9s
+Executing transaction: \ By downloading and using the CUDA Toolkit conda packages, you accept the terms and conditions of the CUDA End User License Agreement (EULA): https://docs.nvidia.com/cuda/eula/index.html
+[+] 8.2s
+\ By downloading and using the cuDNN conda packages, you accept the terms and conditions of the NVIDIA cuDNN EULA -━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 171.6MB / 171.6MB                            2.9s
+  https://docs.nvidia.com/deeplearning/cudnn/sla/index.html
+[+] 8.1s
+/ wnloading      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 171.6MB / 171.6MB                            2.9s
+done
+python                                              23.7MB @  26.0MB/s  0.4s
+To activate this environment, use                  133.5MB @  46.1MB/s  2.4s
+[+] 7.7s
+     $ mamba activate /home/tmh6260/my_environments/pytorch_test━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 171.6MB / 171.6MB                            2.9s
+
+To deactivate an active environment, use
+
+     $ mamba deactivate
 ```
 
-Because some of the packages in the `emodpy-torch` environment were installed using `pip`, they might not make it through the conda clone step. To add them:
+Activate your virtual environment
 
 ``` bash
-# Activate your new virtual environment 
-source activate <path/to/env>/<YOUR_ENVIRONMENT> # ex. /projects/b1139/environments/my_environment  
-# pip install from requirements.txt 
+source activate /home/tmh6260/my_environments/pytorch_test
+```
+
+Add 2 additional conda packages
+
+``` bash
+conda install icu=75.1
+conda install zstd=1.5.6
+```
+
+Some packages need to be installed or specified using `pip`. To add them:
+
+``` bash
+# pip install others emodpy-malaria and idmtools
+pip install emodpy-malaria --ignore-installed --index-url=https://packages.idmod.org/api/pypi/pypi-production/simple 
+
+# copy idm_tools_platform_slurm v1.7.11 from emodpy-torch environment, along with dist-info
+cp -r /projects/b1139/environments/emodpy-torch/lib/python3.9/site-packages/idmtools_platform_slurm/ /<PATH TO YOUR ENVIRONMENT>/lib/python3.9/site-packages/idmtools_platform_slurm
+cp -r /projects/b1139/environments/emodpy-torch/lib/python3.9/site-packages/idmtools_platform_slurm-1.7.11.dist-info /<PATH TO YOUR ENVIRONMENT>/lib/python3.9/site-packages/idmtools_platform_slurm-1.7.11.dist-info
+
+# pip install others from requirements.txt
 pip install -r /projects/b1139/environments/emodpy-torch/requirements.txt
+
+# pip install a few more required packages 
+pip install gpytorch
+pip install botorch==0.8.1
+pip install seaborn
 ```
 
 </details>
@@ -245,15 +383,15 @@ Output from each round of calibration 0-`n_batches`:
     *A copy of the simulation_output folder containing analyzed outputs*
 
     -   SO/`site`/
-        -   InsetChart.csv\
-        -   ...\
+        -   InsetChart.csv
+        -   ...
         -   finished.txt
 
 -   ...\
 
 -   LF\_`n_batches`/
 
-    -   translated_params.csv\
+    -   translated_params.csv
     -   SO/`site`/
         -   InsetChart.csv
         -   ...
@@ -261,17 +399,32 @@ Output from each round of calibration 0-`n_batches`:
 
 For any round in which there was an improvement in overall score will contain all of the same files shown above for LF_0. If no improvment, only those shown for LF\_<n_batches> above will appear.
 
+After the calibration loop completes, `post_calibration_analysis` produces a few meta-performance plots and fits a GP to each objective separately for more detailed parameter sensitivity analysis. This produces the files:
+
+-   performance/
+    -    GP/
+        -    <scoretype>_LS.csv   # For each scoretype calculated
+        -    length_scales.png
+        -    predictions.png
+        -    timing.png
+
 Additionally, plots of score and parameter convergence over time can be produced by running **post_calibration_plots.Rmd**, with the appropriate <exp_label>.
 
 This produces new files inside simulations/output/<exp_label>:
 
 -   performance/
     -   scores/
-        -   scores_total.png\
-        -   scores_by_objective.png\
+        -   scores_total.png
+        -   scores_by_objective.png
     -   parameters/
-        -   unit_parameters.png\
+        -   unit_parameters.png
         -   emod_parameters.png
+        -   search_space_x_objective_scores_round_<n>.png
+        -   search_space_x_total_score_round_<n>.png
+
+    -   GP/
+        -   detailed_length_scales.png
+        ![alt text](sample_output/detailed_length_scales.png)
 
 </details>
 
