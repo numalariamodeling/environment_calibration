@@ -1,0 +1,150 @@
+{
+   "Defaults": {
+      "IndividualAttributes": {
+         "AgeDistribution": {
+            "DistributionValues": [
+               0.0,
+               0.02776,
+               0.054757019999999997,
+               0.08108463333333334,
+               0.10675965999999999,
+               0.13179813999999998,
+               0.15621579666666668,
+               0.1800275,
+               0.20324887333333333,
+               0.22589462,
+               0.24797894,
+               0.26951576,
+               0.29051856666666664,
+               0.31100016,
+               0.3309739933333333,
+               0.3504527,
+               0.44083657,
+               0.52055694,
+               0.5908718266666666,
+               0.6528907333333334,
+               0.70759251,
+               0.7558406133333333,
+               0.79839638,
+               0.8359314400000001,
+               0.86903801,
+               0.8982385933333333,
+               0.92399405,
+               0.9467108333333334,
+               0.9667475366666667,
+               0.9844202999999999,
+               1.0
+            ],
+            "NumDistributionAxes": 0,
+            "ResultScaleFactor": 365,
+            "ResultUnits": "years",
+            "ResultValues": [
+               0,
+               1,
+               2,
+               3,
+               4,
+               5,
+               6,
+               7,
+               8,
+               9,
+               10,
+               11,
+               12,
+               13,
+               14,
+               15,
+               20,
+               25,
+               30,
+               35,
+               40,
+               45,
+               50,
+               55,
+               60,
+               65,
+               70,
+               75,
+               80,
+               85,
+               90
+            ]
+         },
+         "AgeDistribution1": 0,
+         "AgeDistribution2": 18250,
+         "AgeDistributionFlag": 1,
+         "InitialPrevalence": 0,
+         "MortalityDistribution": {
+            "AxisNames": [
+               "gender",
+               "age"
+            ],
+            "AxisScaleFactors": [
+               1,
+               365
+            ],
+            "AxisUnits": [
+               "male=0,female=1",
+               "years"
+            ],
+            "PopulationGroups": [
+               [
+                  0,
+                  1
+               ],
+               [
+                  0
+               ]
+            ],
+            "ResultScaleFactor": 1,
+            "ResultUnits": "daily probability of dying",
+            "ResultValues": [
+               [
+                  7.671527130833847e-05
+               ],
+               [
+                  7.671527130833847e-05
+               ]
+            ]
+         },
+         "PrevalenceDist_Description": "Uniform draw from 0.2 to 0.2",
+         "PrevalenceDistribution1": 0.2,
+         "PrevalenceDistribution2": 0.2,
+         "PrevalenceDistributionFlag": 1,
+         "PrevalenceDistribution_Description": "Constant Initial Prevalence (0.2)",
+         "RiskDist_Description": "LogNormal distributed risk",
+         "RiskDistribution1": 0.0,
+         "RiskDistribution2": 1.6,
+         "RiskDistributionFlag": 5
+      },
+      "IndividualProperties": [],
+      "NodeAttributes": {
+         "Airport": 1,
+         "Altitude": 0,
+         "BirthRate": 0.07671232876712328,
+         "Region": 1,
+         "Seaport": 1
+      }
+   },
+   "Metadata": {
+      "Author": "upf3610",
+      "DateCreated": "11/08/2024",
+      "IdReference": "Aiyedade",
+      "NodeCount": 1,
+      "Tool": "emod-api"
+   },
+   "Nodes": [
+      {
+         "IndividualAttributes": {},
+         "NodeAttributes": {
+            "FacilityName": "Aiyedade",
+            "InitialPopulation": 1000,
+            "Latitude": 7.4666648,
+            "Longitude": 4.3499986
+         },
+         "NodeID": 1
+      }
+   ]
+}
