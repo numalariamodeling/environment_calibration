@@ -28,8 +28,8 @@ from run_full_comparison import plot_allAge_prevalence,plot_incidence,compute_sc
 
 ####################################
 # Experiment details - this is the only section you need to edit with the script
-Site="Nanoro"
-exp_label = "test_new_env"
+Site="Aiyedade"
+exp_label = f"{Site}_trial_tobias"
 ####################################
 
 output_dir = f"output/{exp_label}"
