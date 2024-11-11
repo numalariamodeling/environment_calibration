@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH -A b1139
-#SBATCH -p b1139testnode
+#SBATCH -p b1139
 #SBATCH -t 12:00:00
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
@@ -11,5 +11,4 @@
 
 module purge all
 
-/projects/b1139/environments/emodpy-torch/bin/python run_calib.py
-
+/home/tmh6260/my_environments/pytorch_test/bin/python run_calib.py

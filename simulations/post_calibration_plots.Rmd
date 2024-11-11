@@ -12,7 +12,7 @@ library(patchwork)
 library(glue)
 
 # exp_labeleriment name
-exp_label <- "test_smc"
+exp_label <- "test_large"
 coord_df <- read.csv("../simulation_inputs/calibration_coordinator.csv")
 # Number of training batches
 training_batches <- coord_df$init_batches
@@ -25,8 +25,6 @@ score_folder<-paste("output",exp_label,"performance/scores",sep='/')
 if(!(dir.exists(score_folder))){dir.create(score_folder)}
 parameters_folder<-paste("output",exp_label,"performance/parameters",sep='/')
 if(!(dir.exists(parameters_folder))){dir.create(parameters_folder)}
-#GP_folder<-paste("output",exp_label,"performance/GP",sep='/')
-#if(!(dir.exists(GP_folder))){dir.create(GP_folder)}
 objectives_folder<-paste("output",exp_label,"objectives",sep='/')
 if(!(dir.exists(objectives_folder))){dir.create(objectives_folder)}
 
@@ -124,7 +122,7 @@ imps$param_set -> imps
 
 ```
 
-
+# plot convergence
 ```{r}
 ### Plot score convergence
 scores %>%
@@ -237,6 +235,7 @@ ggsave(paste(parameters_folder,paste("unit_parameters.png",sep="_"),sep='/'),hei
 
 ```
 
+# search space
 
 ```{r}
 # scores vs. parameters
@@ -269,12 +268,13 @@ spread_df %>% group_by(param_set,round,CONST_Multiplier,TEMPR_Multiplier,WATEV_M
   arrange(-total_score)%>%
   ggplot(aes(x=WATEV_Multiplier,y=Temperature_Shift)) +
   geom_point(aes(color=factor(round))) +
-  labs(color="log(Y)")+
+  labs(color="Batch")+
   theme_minimal(base_size=12) +
   theme(legend.position="top")
 
 
 for(r in seq(0,max(spread_df$round),1)){
+  print(r)
   spread_df %>% 
     filter(round<=r)%>%
     group_by(param_set,round,CONST_Multiplier,TEMPR_Multiplier,WATEV_Multiplier,Temperature_Shift) %>%
@@ -304,7 +304,6 @@ for(r in seq(0,max(spread_df$round),1)){
   print(p1 + p2)
   
   ggsave(paste(parameters_folder,paste("search_space_x_total_score","round",glue("{r}.png"),sep="_"),sep='/'),height = 8,width=12)
-
   
   spread_df %>% 
     filter(round<=r)%>%
@@ -335,5 +334,58 @@ for(r in seq(0,max(spread_df$round),1)){
     ggsave(paste(parameters_folder,paste("search_space_x_objective_scores","round",glue("{r}.png"),sep="_"),sep='/'),height = 8,width=12)
 
 }
+```
+
+
+# lengthscales heatmap
+
+
+```{r}
+GP_folder<-paste("output",exp_label,"performance/GP",sep='/')
+if(!(dir.exists(GP_folder))){dir.create(GP_folder)}
+
+parameter_key=read.csv("parameter_key.csv")
+
+ls_files = list.files(GP_folder)
+ls_files = ls_files[grepl("LS",ls_files)]
+
+LS <- read.csv(paste(GP_folder,ls_files[1],sep='/'))
+for(i in 2:length(ls_files)){
+  LS %>% rbind.data.frame(read.csv(paste(GP_folder,ls_files[i],sep='/')))->LS
+}
+
+
+LS %>% mutate(parameter=params[id]) -> LS
+
+LS %>% 
+  ggplot(aes(x=parameter,y=score_type)) +
+  theme_minimal(base_size=16)+
+  geom_tile(color="white",
+            aes(fill=log10(value))) +
+  scale_fill_distiller(palette="RdGy",direction = 1) +
+  theme(axis.text.x = element_text(angle=-45,vjust=0,hjust=0),
+        legend.position="right",
+        legend.title.position = "top",
+        legend.direction = "horizontal",
+        legend.title = element_text(size=12)) +
+  coord_fixed() + xlab("") + ylab("") +
+  labs(fill="Log10(lengthscale)")
+
+LS %>% 
+  ggplot(aes(x=parameter,y=gsub("_score","",score_type))) +
+  theme_minimal(base_size=16)+
+  geom_tile(color="white",
+            aes(fill=log10(value))) +
+  scale_fill_distiller(palette="RdGy",direction = 1) +
+  theme(axis.text.x = element_text(angle=-45,vjust=0,hjust=0),
+        legend.position="right",
+        legend.title.position = "top",
+        legend.direction = "horizontal",
+        legend.title = element_text(size=12)) +
+  coord_fixed() + xlab("") + ylab("") +
+  labs(fill="Log10(lengthscale)")
+  
+ggsave(paste(GP_folder,paste("detailed_length_scales.png"),sep='/'),height = 6,width=8)
+
 ```
 

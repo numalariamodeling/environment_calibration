@@ -63,4 +63,4 @@ SIF_PATH = "--bind /projects /projects/b1139/images/dtk_run_rocky_py39.sif"
 job_directory = PROJECT_DIR / 'experiments'
 os.makedirs(job_directory, exist_ok=True)
 
-VENV_PATH = '/projects/b1139/environments/emodpy-torch'
+VENV_PATH = '/home/tmh6260/my_environments/pytorch_test'
