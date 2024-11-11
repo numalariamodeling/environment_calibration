@@ -4,6 +4,8 @@ __pycache__/
 #log files
 *.err
 *.out
+*.log
+simulations/log/*
 
 # Batch submission scripts
 

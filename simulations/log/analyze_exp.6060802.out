@@ -1,0 +1,16 @@
+/!\ WARNING: File 'idmtools.ini' Not Found! For details on how to configure idmtools, see https://docs.idmod.org/projects/idmtools/en/v1.7.1/configuration.html for details on how to configure idmtools.
+
+[SLURM_LOCAL]
+{
+   "mode": "local",
+   "job_directory": "/projects/b1139/ipti_pmc/environment_calibration/experiments"
+}
+pass
+Analyze Manager
+ | 10 item(s) selected for analysis
+ | partial_analyze_ok is True, max_items is None, and 0 item(s) are being ignored
+ | Analyzer(s): 
+ |  - InsetChartAnalyzer File parsing: on / Use cache: off
+ |  - MonthlyIncidenceAnalyzer File parsing: on / Use cache: off
+ | Pool of 10 analyzing process(es)
+ | Analysis complete. Took 0 seconds (~ 0.045 per item)

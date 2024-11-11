@@ -25,11 +25,10 @@ from my_func import my_func as myFunc
 sys.path.append("../environment_calibration_common/compare_to_data")
 from run_full_comparison import plot_allAge_prevalence,plot_incidence,compute_scores_across_site,save_rangeEIR,save_AnnualIncidence 
 
-
 ####################################
 # Experiment details - this is the only section you need to edit with the script
-Site="Nanoro"
-exp_label = "test_new_env"
+Site="Aiyedade"
+exp_label = f"{Site}_trial_tobias"
 ####################################
 
 output_dir = f"output/{exp_label}"
@@ -191,7 +190,7 @@ bo.initRandom(init_samples,n_batches = init_batches)
 # Run the optimization loop
 bo.run()
 
-##### Post-calibration steps
+#### Post-calibration steps
 
 # This section calls on the overall post_calibration_analysis pipeline, and
 # will only run once the max_eval limit has been reached in the fitting
