@@ -1,2 +1,28 @@
-nodes,site,lat,lon,climate_start_year,climate_year_dur,pop,birth_rate,prev0,validation_subset,location,country,years,nSims,simulation_duration,report_start_day,include_site,run_script_name,demographics_filepath,NMF_filepath,CM_filepath,include_AnnualMalariaSummaryReport,include_MonthlyMalariaSummaryReport,SMC_filepath,ITN_filepath,ITN_age_filepath,ITN_season_filepath,calculate_scores,vector_filepath
-1,Aiyedade,7.4666648,4.3499986,2010,10,1000,38.0,0.2,core_relationship,Aiyedade,Nigeria,2018-2020,1,21931,20075,TRUE,run_sims.py,demographics_files/Aiyedade_demographics.json,nonmalarial_fevers/nmf_rates_generic.csv,cm/Nanoro_case_management.csv,TRUE,TRUE,smc/SMC.csv,itn/Nanoro_ITN.csv,itn/ITN_age.csv,itn/ITN_season.csv,1,vectors/vectors.csv
+option,value,description
+site,Aiyedade,site name
+lat,7.4666648,site latitude
+lon,4.3499986,site longitude
+climate_start_year,2010,First year of climate data to request from ERA5
+climate_year_dur,10,# years of climate data to pull from ERA5
+pop,1000,simulated population
+birth_rate,38,Crude birth rate for site
+prev0,0.2,Initial prevalence to supply to demographics file
+nSims,1,# of random seeds to simulate
+simulation_start_year,2010,Day 0 of simulation is Jan 1 of this year
+simulation_years,10,# of years to simulate (Jan 1- Dec 31)
+demographics_filepath,demographics_files/Aiyedade_demographics.json,<site>_demographics.json if using create_files.py
+NMF_filepath,nonmalarial_fevers/nmf_rates_generic.csv,blank if not applicable
+CM_filepath,cm/Nanoro_case_management.csv,blank if not applicable
+SMC_filepath,smc/SMC.csv,"file describing SMC campaigns, if any"
+ITN_filepath,itn/Nanoro_ITN.csv,"file describing ITN distribution campaigns, if any"
+ITN_age_filepath,itn/ITN_age.csv,"file describing age-based patterns in ITN usage, if any"
+ITN_season_filepath,itn/ITN_season.csv,"file describing seasonal patterns in ITN usage, ifa ny"
+vector_filepath,vectors/vectors.csv,file describing mix of vector species and their ecology
+prevalence_comparison,TRUE,include a measure of prevalence in scoring?
+prevalence_comparison_reference,pcr_prevalence_AllAge.csv,reference dataset for prevalence
+prevalence_comparison_frequency,monthly,"""monthly"" or ""annual"" (not tested)"
+prevalence_comparison_diagnostic,PCR,"""PCR"" or ""Microscopy"" or ""RDT"""
+incidence_comparison,TRUE,include a measure of clinical incidence in scoring?
+incidence_comparison_reference,routine_incidence_by_district.csv,reference dataset for incidence
+incidence_comparison_frequency,monthly,"""monthly"" or ""annual"""
+incidence_comparison_agebin,100,agebin (within incidence_comparison_reference) to use for comparison
