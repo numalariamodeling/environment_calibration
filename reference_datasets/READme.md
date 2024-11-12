@@ -5,6 +5,11 @@ Currently accepted input datasets:
 |:----:|:-------:|:-------:|:-----:|:--------------:|
 | | | | | |
 
+**Prevalence by Microscopy vs. Month/Year/Age:**
+| site | year		| month   | age   | prevalence | 
+|:----:|:-------:|:-------:|:-----:|:--------------:|
+| | | | | |
+
 **Routine Clinical Incidence by Month and Age:**
 | site		| year | month | age | case |
 |:-------:|:----:|:-----:|:---:|:----:|

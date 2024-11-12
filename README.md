@@ -229,7 +229,7 @@ pip install seaborn
     -   Example **simulation_coordinator.csv**
 
         | option                           | value                                       | description                                                          |
-        |-----------------|-----------------|--------------------------------------|
+        |----------------------------------|---------------------------------------------|----------------------------------------------------------------------|
         | site                             | Nanoro                                      | site name                                                            |
         | lat                              | 12.68                                       | site latitude                                                        |
         | lon                              | -2.19                                       | site longitude                                                       |
@@ -244,15 +244,16 @@ pip install seaborn
         | demographics_filepath            | demographics_files/Nanoro_demographics.json | <site>\_demographics.json if using create_files.py                   |
         | NMF_filepath                     | nonmalarial_fevers/nmf_rates_generic.csv    | blank if not applicable                                              |
         | CM_filepath                      | cm/Nanoro_case_management.csv               | blank if not applicable                                              |
-        | SMC_filepath                     |                                             | "file describing SMC campaigns                                       |
+        | SMC_filepath                     | smc/SMC.csv                                 | "file describing SMC campaigns                                       |
         | ITN_filepath                     | itn/Nanoro_ITN.csv                          | "file describing ITN distribution campaigns                          |
         | ITN_age_filepath                 | itn/ITN_age.csv                             | "file describing age-based patterns in ITN usage                     |
         | ITN_season_filepath              | itn/ITN_season.csv                          | "file describing seasonal patterns in ITN usage                      |
         | vector_filepath                  | vectors/vectors.csv                         | file describing mix of vector species and their ecology              |
         | prevalence_comparison            | TRUE                                        | include a measure of prevalence in scoring?                          |
-        | prevalence_comparison_reference  | pcr_prevalence_AllAge.csv                   | reference dataset for prevalence                                     |
-        | prevalence_comparison_frequency  | monthly                                     | """monthly"" or ""annual"" (not tested)"                             |
-        | prevalence_comparison_diagnostic | PCR                                         | """PCR"" or ""Microscopy"" or ""RDT"""                               |
+        | prevalence_comparison_reference  | monthly_pfpr_by_microscopy.csv              | reference dataset for prevalence                                     |
+        | prevalence_comparison_frequency  | monthly                                     | """monthly""                                                         |
+        | prevalence_comparison_diagnostic | Microscopy                                  | """PCR"" or ""Microscopy""                                           |
+        | prevalence_comparison_agebin     | 100                                         | agebin (within prevalence_comparison_reference) to use for comparison|
         | incidence_comparison             | TRUE                                        | include a measure of clinical incidence in scoring?                  |
         | incidence_comparison_reference   | routine_incidence_by_district.csv           | reference dataset for incidence                                      |
         | incidence_comparison_frequency   | monthly                                     | """monthly"" or ""annual"""                                          |
@@ -313,12 +314,12 @@ pip install seaborn
 
     -   Example **weights.csv**
 
-        |    objective     | weight |                                     |
-        |:----------------:|:------:|-------------------------------------|
-        |   shape_score    | 0.001  | *Normalized monthly incidence*      |
-        | intensity_score  |  0.1   | *Average annual clinical incidence* |
-        | prevalence_score |  0.1   | *Monthly all-age prevalence*        |
-        |    eir_score     |  10.0  | *EIR threshold*                     |
+        |    objective     | weight |                                          |
+        |:----------------:|:------:|------------------------------------------|
+        |   shape_score    | 0.001  | *Normalized monthly incidence*           |
+        | intensity_score  |  0.1   | *Average annual clinical incidence*      |
+        | prevalence_score |  0.1   | *Monthly prevalence by PCR or microscopy*|
+        |    eir_score     |  10.0  | *EIR threshold*                          |
 
 3.  Set up calibration scheme
 
@@ -376,8 +377,11 @@ Output from each round of calibration 0-`n_batches`:
         |||||  
     -   incidence\_`site`.png  
         ![alt text](sample_output/incidence_Nanoro.png)
-    -   prevalence\_`site`.png
-        ![alt text](sample_output/prevalence_Nanoro.png)
+    -   prevalence\_`site`.png  
+        Via PCR  
+        ![alt text](sample_output/prevalence_Nanoro.png)  
+        Via Microscopy  
+        ![alt text](sample_output/pfpr_Nanoro.png)  
       
 
     *A copy of the simulation_output folder containing analyzed outputs*
@@ -501,7 +505,7 @@ Steps taken to report out, analyze, and compare simulation results to targets:
 
 <details>
 
-<summary>(prevalence_score) All-age PCR prevalence by month and year</summary>
+<summary>(prevalence_score) PCR prevalence by month and year (*all-age only*)</summary>
 
 -   Report: InsetChart
 -   Analyzer: InsetChart Analyzer
@@ -515,9 +519,9 @@ Steps taken to report out, analyze, and compare simulation results to targets:
 
 <details>
 
-<summary>(pfpr_score) Microscopy prevalence by month and year in one age group ${\color{red}\text{Not yet tested}}$</summary>
+<summary>(prevalence_score) Microscopy prevalence by month and year (*by age, or all-ages*) </summary>
 
--   Report: MalariaSummaryReport\
+-   Report: MalariaSummaryReport  
 -   Analyzer: MonthlyPfPRAnalyzer
 -   Output: PfPR_monthly.csv
 -   Scoring: `compare_PfPR_prevalence(site,agebin)`

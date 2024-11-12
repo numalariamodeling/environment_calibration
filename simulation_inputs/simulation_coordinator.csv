@@ -19,9 +19,10 @@ ITN_age_filepath,itn/ITN_age.csv,"file describing age-based patterns in ITN usag
 ITN_season_filepath,itn/ITN_season.csv,"file describing seasonal patterns in ITN usage, ifa ny"
 vector_filepath,vectors/vectors.csv,file describing mix of vector species and their ecology
 prevalence_comparison,TRUE,include a measure of prevalence in scoring?
-prevalence_comparison_reference,pcr_prevalence_AllAge.csv,reference dataset for prevalence
+prevalence_comparison_reference,Nanoro_dhs_pfpr.csv,reference dataset for prevalence
 prevalence_comparison_frequency,monthly,"""monthly"" or ""annual"" (not tested)"
-prevalence_comparison_diagnostic,PCR,"""PCR"" or ""Microscopy"" or ""RDT"""
+prevalence_comparison_diagnostic,Microscopy,"""PCR"" or ""Microscopy"" or ""RDT"""
+prevalence_comparison_agebin,100,agebin (within prevealence_comparison_reference) to use for comparison. NA if PCR.
 incidence_comparison,TRUE,include a measure of clinical incidence in scoring?
 incidence_comparison_reference,routine_incidence_by_district.csv,reference dataset for incidence
 incidence_comparison_frequency,monthly,"""monthly"" or ""annual"""

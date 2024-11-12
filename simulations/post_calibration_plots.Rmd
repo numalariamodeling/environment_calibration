@@ -10,21 +10,25 @@ editor_options:
 library(tidyverse)
 library(patchwork)
 library(glue)
-
+library(jsonlite)
 # exp_labeleriment name
-exp_label <- "test_large"
-coord_df <- read.csv("../simulation_inputs/calibration_coordinator.csv")
+exp_label <- "test_long"
+turbo <- jsonlite::read_json(glue("output/{exp_label}/TurboThompson.json"))
 # Number of training batches
-training_batches <- coord_df$init_batches
+training_batches <- 1
 # Batch size
-batch_size <- coord_df$batch_size
+batch_size <- turbo$batch_size
 # Create folders to store post-calibration plots
 performance_folder<-paste("output",exp_label,"performance",sep='/')
 if(!(dir.exists(performance_folder))){dir.create(performance_folder)}
 score_folder<-paste("output",exp_label,"performance/scores",sep='/')
 if(!(dir.exists(score_folder))){dir.create(score_folder)}
 parameters_folder<-paste("output",exp_label,"performance/parameters",sep='/')
-if(!(dir.exists(parameters_folder))){dir.create(parameters_folder)}
+if(!(dir.exists(parameters_folder)))
+  {
+    dir.create(parameters_folder)
+    dir.create(paste(parameters_folder,'search_space',sep='/'))
+  }
 objectives_folder<-paste("output",exp_label,"objectives",sep='/')
 if(!(dir.exists(objectives_folder))){dir.create(objectives_folder)}
 
@@ -129,11 +133,36 @@ scores %>%
   #filter(eir_score==0) %>%
   mutate(eir_flag=eir_score>0) %>%
   ggplot(aes(x=param_set,y=log10(score))) +
-  geom_point(data=.%>%filter(!(param_set %in% imps) & !eir_flag))  +
+  geom_point(data=.%>%filter(!(param_set %in% imps) & !eir_flag),
+             aes(color=factor(round)))  +
   geom_point(data=.%>%filter(!(param_set %in% imps) & eir_flag),
-             aes(shape="EIR OOB"),size=0.5)  +
+             aes(shape="EIR OOB",color=factor(round)),size=0.5)  +
   geom_point(data=.%>%filter(param_set %in% imps),
-             aes(color="improvement"),
+             aes(shape="improvement"),
+             fill="white") +
+  # geom_point(data=.%>%filter(score==min(scores$score,na.rm=T)),
+  #            aes(shape="best")) +
+  theme_minimal(base_size=16) +
+  labs(color=NULL,shape=NULL) +
+  #guides(shape="none")+
+  scale_shape_manual(values=c(4,21))+
+  xlab("Parameter Set #") + ylab("Log10 Total Score") +
+  scale_color_manual(values=my_pal)
+ggsave(paste(score_folder,paste("scores_total.png",sep="_"),sep='/'),height = 8,width=8)
+
+
+### Ignore EIR score
+
+scores%>% mutate(score2=shape_score+intensity_score+prevalence_score)%>%
+  #filter(eir_score==0) %>%
+  mutate(eir_flag=eir_score>0) %>%
+  ggplot(aes(x=param_set,y=log10(score2))) +
+  geom_point(data=.%>%filter(!(param_set %in% imps) & !eir_flag),
+             aes(color=factor(round)))  +
+  geom_point(data=.%>%filter(!(param_set %in% imps) & eir_flag),
+             aes(shape="EIR OOB",color=factor(round)),size=0.5)  +
+  geom_point(data=.%>%filter(param_set %in% imps),
+             aes(shape="improvement"),
              fill="white") +
   # geom_point(data=.%>%filter(score==min(scores$score,na.rm=T)),
   #            aes(shape="best")) +
@@ -142,25 +171,27 @@ scores %>%
   #guides(shape="none")+
   scale_shape_manual(values=c(4,21))+
   xlab("Parameter Set #") + ylab("Log10 Total Score")
-ggsave(paste(score_folder,paste("scores_total.png",sep="_"),sep='/'),height = 8,width=8)
 
 scores %>%
   mutate(eir_flag=eir_score>0) %>%
-  select(param_set,shape_score,intensity_score,prevalence_score,eir_score,eir_flag) %>%
-  gather("score_type","value",-c("param_set",eir_flag)) %>%
-  ggplot(aes(x=param_set,y=value)) +
-  geom_point(data=.%>%filter(!(param_set %in% imps) & !eir_flag))  +
+  select(param_set,round,shape_score,intensity_score,prevalence_score,eir_score,eir_flag) %>%
+  gather("score_type","value",-c("param_set","round",eir_flag)) %>%
+  ggplot(aes(x=param_set,y=log10(value))) +
+  geom_point(data=.%>%filter(!(param_set %in% imps) & !eir_flag),
+             aes(color=factor(round)))  +
   geom_point(data=.%>%filter(!(param_set %in% imps) & eir_flag),
-             aes(shape="EIR OOB"),size=0.5)  +
+             aes(shape="EIR OOB",color=factor(round)),size=0.5)  +
   geom_point(data=.%>%filter(param_set %in% imps),
-             aes(color="improvement"),
+             aes(shape="improvement"),
              fill="white") +
-  facet_wrap(~score_type,scales="free_y") +
+  facet_wrap(~gsub("_score","",score_type),scales="free_y") +
   theme_minimal(base_size=16) +
   labs(color=NULL,shape=NULL) +
   #guides(shape="none") +
-  scale_shape_manual(values=c(4,19,21)) +
-  xlab("Parameter Set #") + ylab("Score")
+  scale_shape_manual(values=c(4,21)) + 
+  xlab("Parameter Set #") + ylab("Log10 Score") +
+  scale_color_manual(values=my_pal)
+
 ggsave(paste(score_folder,paste("scores_by_objective.png",sep="_"),sep='/'),height = 8,width=8)
 
 
@@ -172,6 +203,20 @@ scores %>%
   ggplot(aes(x=round,y=value)) +
   geom_bar(aes(fill=factor(score_type)),
            stat="identity",width=0.9) +
+  labs(fill="Best Parameter Set") +
+  ylab("score") + xlab("Round")+
+  scale_x_continuous(breaks=seq(0,max(scores$round),1))+
+  theme_minimal(base_size=16) +
+  theme(panel.grid.minor.x=element_blank())
+
+scores %>%
+  #filter(param_set %in% imps) %>%
+  group_by(round) %>% filter(score==min(score)) %>%
+  select(round,shape_score,intensity_score,prevalence_score,eir_score) %>%
+  gather("score_type","value",-c("round")) %>%
+  ggplot(aes(x=round,y=value)) +
+  geom_area(aes(fill=factor(score_type)),
+           stat="identity",width=0.9,color="black") +
   labs(fill="Best Parameter Set") +
   ylab("score") + xlab("Round")+
   scale_x_continuous(breaks=seq(0,max(scores$round),1))+
@@ -194,20 +239,22 @@ tp %>%
   mutate(eir_flag=eir_score>0)%>%
   ggplot(aes(x=param_set,y=emod_value)) +
   facet_wrap(~ifelse(transformation=="log",paste("Log",parameter),parameter))  +
-  geom_point(data=.%>%filter(!(param_set %in% imps) & !eir_flag))  +
+  geom_point(data=.%>%filter(!(param_set %in% imps) & !eir_flag),
+             aes(color=factor(round)))  +
   geom_point(data=.%>%filter(!(param_set %in% imps) & eir_flag),
-             aes(shape="EIR OOB"),size=0.5)  +
+             aes(shape="EIR OOB",color=factor(round)),size=0.5)  +
   geom_point(data=.%>%filter(param_set %in% imps),
-             aes(color="improvement"),
+             aes(shape="improvement"),
              fill="white") +
   geom_point(data=tp %>% filter(!(param_set %in% scores$param_set)),
              alpha=0.25)+
   theme_minimal(base_size=16) +
   labs(color=NULL,shape=NULL,alpha=NULL) +
   #guides(shape="none",alpha="none")+
-  scale_shape_manual(values=c(4,19,21))+
+  scale_shape_manual(values=c(4,21))+
   xlab("Parameter Set #") + ylab("EMOD Parameter Value") +
-  scale_alpha_manual(values=c(0.5,1))
+  scale_alpha_manual(values=c(0.5,1)) +
+  scale_color_manual(values=my_pal)
 
 ggsave(paste(parameters_folder,paste("emod_parameters.png",sep="_"),sep='/'),height = 8,width=8)
 
@@ -216,20 +263,22 @@ tp %>%
   mutate(eir_flag=eir_score>0)%>%
   ggplot(aes(x=param_set,y=unit_value)) +
   facet_wrap(~parameter)  +
-  geom_point(data=.%>%filter(!(param_set %in% imps) & !eir_flag))  +
+  geom_point(data=.%>%filter(!(param_set %in% imps) & !eir_flag),
+             aes(color=factor(round)))  +
   geom_point(data=.%>%filter(!(param_set %in% imps) & eir_flag),
-             aes(shape="EIR OOB"),size=0.5)  +
+             aes(shape="EIR OOB",color=factor(round)),size=0.5)  +
   geom_point(data=.%>%filter(param_set %in% imps),
-             aes(color="improvement"),
+             aes(shape="improvement"),
              fill="white") +
   geom_point(data=tp %>% filter(!(param_set %in% scores$param_set)),
              alpha=0.25)+
   theme_minimal(base_size=16) +
   labs(color=NULL,shape=NULL,alpha=NULL) +
   #guides(shape="none",alpha="none")+
-  scale_shape_manual(values=c(4,19,21))+
+  scale_shape_manual(values=c(4,21))+
   xlab("Parameter Set #") + ylab("Unit Parameter Value") +
-  scale_alpha_manual(values=c(0.5,1))
+  scale_alpha_manual(values=c(0.5,1)) +
+  scale_color_manual(values=my_pal)
 
 ggsave(paste(parameters_folder,paste("unit_parameters.png",sep="_"),sep='/'),height = 8,width=8)
 
@@ -246,7 +295,7 @@ scores %>% left_join(tp %>% mutate(round=as.integer(round)) %>% select(param_set
   
 spread_df %>% group_by(param_set,round,CONST_Multiplier,TEMPR_Multiplier,WATEV_Multiplier,Temperature_Shift) %>%
   summarize(total_score=sum(score)) %>%
-  ggplot(aes(x=CONST_Multiplier,y=TEMPR_Multiplier)) +
+  ggplot(aes(x=CONST_Multiplier,y=Temperature_Shift)) +
   geom_point(aes(color=log10(total_score))) +
   labs(color="log(Y)")+
   scale_color_distiller(palette="Spectral") +
@@ -256,21 +305,14 @@ spread_df %>% group_by(param_set,round,CONST_Multiplier,TEMPR_Multiplier,WATEV_M
 spread_df %>% group_by(param_set,round,CONST_Multiplier,TEMPR_Multiplier,WATEV_Multiplier,Temperature_Shift) %>%
   summarize(total_score=sum(score)) %>%
   arrange(-total_score)%>%
-  ggplot(aes(x=WATEV_Multiplier,y=Temperature_Shift)) +
+  ggplot(aes(x=WATEV_Multiplier,y=TEMPR_Multiplier)) +
   geom_point(aes(color=log10(total_score))) +
   labs(color="log(Y)")+
   scale_color_distiller(palette="Spectral") +
   theme_minimal(base_size=12) +
   theme(legend.position="top")
 
-spread_df %>% group_by(param_set,round,CONST_Multiplier,TEMPR_Multiplier,WATEV_Multiplier,Temperature_Shift) %>%
-  summarize(total_score=sum(score)) %>%
-  arrange(-total_score)%>%
-  ggplot(aes(x=WATEV_Multiplier,y=Temperature_Shift)) +
-  geom_point(aes(color=factor(round))) +
-  labs(color="Batch")+
-  theme_minimal(base_size=12) +
-  theme(legend.position="top")
+
 
 
 for(r in seq(0,max(spread_df$round),1)){
@@ -280,8 +322,9 @@ for(r in seq(0,max(spread_df$round),1)){
     group_by(param_set,round,CONST_Multiplier,TEMPR_Multiplier,WATEV_Multiplier,Temperature_Shift) %>%
     summarize(total_score=sum(score)) %>%
     arrange(-total_score)%>%
-    ggplot(aes(x=CONST_Multiplier,y=TEMPR_Multiplier)) +
-    geom_point(aes(color=log10(total_score))) +
+    ggplot(aes(x=CONST_Multiplier,y=Temperature_Shift)) +
+    geom_point(aes(color=log10(total_score),alpha=round==r)) +
+    guides(alpha="none")+    
     coord_fixed() +
     labs(color="log(Y)")+
     scale_color_distiller(palette="Spectral") +
@@ -293,8 +336,9 @@ for(r in seq(0,max(spread_df$round),1)){
     group_by(param_set,round,CONST_Multiplier,TEMPR_Multiplier,WATEV_Multiplier,Temperature_Shift) %>%
     summarize(total_score=sum(score)) %>%
     arrange(-total_score)%>%
-    ggplot(aes(x=WATEV_Multiplier,y=Temperature_Shift)) +
-    geom_point(aes(color=log10(total_score))) +
+    ggplot(aes(x=WATEV_Multiplier,y=TEMPR_Multiplier)) +
+    geom_point(aes(color=log10(total_score),alpha=round==r)) +
+    guides(alpha="none")+    
     coord_fixed(xlim = c(0,1),ylim=c(0,1)) +
     labs(color="log(Y)")+
     scale_color_distiller(palette="Spectral") +
@@ -303,13 +347,17 @@ for(r in seq(0,max(spread_df$round),1)){
   
   print(p1 + p2)
   
-  ggsave(paste(parameters_folder,paste("search_space_x_total_score","round",glue("{r}.png"),sep="_"),sep='/'),height = 8,width=12)
-  
+  ggsave(paste(parameters_folder,paste("search_space/total_score","round",glue("{r}.png"),sep="_"),sep='/'),height = 8,width=12)
+}
+
+
+for(r in seq(0,max(spread_df$round),1)){
   spread_df %>% 
     filter(round<=r)%>%
     arrange(-score)%>%
-    ggplot(aes(x=CONST_Multiplier,y=TEMPR_Multiplier)) +
-    geom_point(aes(color=log10(score))) +
+    ggplot(aes(x=CONST_Multiplier,y=Temperature_Shift)) +
+    geom_point(aes(color=log10(score),alpha=round==r)) +
+    guides(alpha="none")+
     facet_wrap(~score_type)+
     labs(color="log(Y)")+
     xlim(c(0,1)) + ylim(c(0,1))+
@@ -320,8 +368,9 @@ for(r in seq(0,max(spread_df$round),1)){
   spread_df %>% 
     filter(round<=r)%>%
     arrange(-score)%>%
-    ggplot(aes(x=WATEV_Multiplier,y=Temperature_Shift)) +
-    geom_point(aes(color=log10(score))) +
+    ggplot(aes(x=WATEV_Multiplier,y=TEMPR_Multiplier)) +
+    geom_point(aes(color=log10(score),alpha=round==r)) +
+    guides(alpha="none")+
     facet_wrap(~score_type)+
     labs(color="log(Y)")+
     xlim(c(0,1)) + ylim(c(0,1))+
@@ -331,9 +380,82 @@ for(r in seq(0,max(spread_df$round),1)){
   
   print(pp3 | pp4)
   
-    ggsave(paste(parameters_folder,paste("search_space_x_objective_scores","round",glue("{r}.png"),sep="_"),sep='/'),height = 8,width=12)
+    ggsave(paste(parameters_folder,paste("search_space/objective_scores","round",glue("{r}.png"),sep="_"),sep='/'),height = 8,width=12)
 
 }
+
+spread_df %>% 
+    arrange(-score)%>%
+    ggplot(aes(x=CONST_Multiplier,y=Temperature_Shift)) +
+    geom_point(aes(color=log10(score))) +
+    facet_grid(round~score_type)+
+    labs(color="log(Y)")+
+    xlim(c(0,1)) + ylim(c(0,1))+
+    scale_color_distiller(palette="Spectral") +
+    theme_minimal(base_size=12) +
+    theme(legend.position="top")
+  
+spread_df %>% 
+    arrange(-score)%>%
+    ggplot(aes(x=WATEV_Multiplier,y=TEMPR_Multiplier)) +
+    geom_point(aes(color=log10(score))) +
+    facet_grid(round~score_type)+
+    labs(color="log(Y)")+
+    xlim(c(0,1)) + ylim(c(0,1))+
+    scale_color_distiller(palette="Spectral") +
+    theme_minimal(base_size=12) +
+    theme(legend.position="top")
+
+
+spread_df %>% 
+    select(-c(X,nps,param_set)) %>%
+    group_by(old_param_set,round)%>%mutate(total=sum(score)) %>% 
+    select(-c(score_type,score))%>%
+    gather("parameter","unit_value",-c("old_param_set","round","total")) %>%
+    ungroup() %>%
+    arrange(round,old_param_set) %>%
+    distinct() %>%
+    group_by(round,parameter) %>% mutate(rank=rank(total,"both")) %>% arrange(rank) %>%
+    ggplot(aes(x=rank,y=unit_value)) +
+    geom_point(aes(color=log10(total))) +
+    facet_grid(round~parameter)+
+    labs(color="log(Y)")+
+    #xlim(c(0,1)) + 
+    ylim(c(0,1))+ 
+    xlab("") + ylab("Unit parameter value") +
+    scale_color_distiller(palette="Spectral") +
+    theme_minimal(base_size=12) +
+    theme(legend.position="top")
+
+
+# Mixed Sets - Heterogeneous parameterizations
+
+spread_df %>%
+  group_by(param_set,round) %>% mutate(total_score=sum(score)) %>%
+  ungroup() %>%
+  mutate(rank=rank(total_score)) -> ranked
+
+ranked %>% 
+  mutate(improved=total_score<min(ranked$total_score[ranked$round<training_batches]))  %>%
+  mutate(improved=ifelse(improved,"better","worse"))%>%
+  mutate(best=total_score==min(ranked$total_score)) %>%
+  mutate(improved=ifelse(best,"best",improved)) %>%
+  mutate(improved=ifelse(round<training_batches," training",improved)) %>%
+  arrange(-total_score) %>%
+  ggplot(aes(alpha=improved,color=improved)) +
+  geom_point(data=.%>%mutate(facet_num="Constant vs.\nTemperature Shift"), 
+           aes(x=CONST_Multiplier,y=Temperature_Shift)) +
+  geom_point(data=.%>%mutate(facet_num="Water Vegetation vs.\nTemporary Rainfall"), 
+           aes(x=WATEV_Multiplier,y=TEMPR_Multiplier)) +
+  facet_wrap(~facet_num) +
+  coord_fixed() +
+  xlab("Parameter 1") + ylab("Parameter 2") +
+  theme_minimal(base_size=14) +
+  scale_color_brewer(palette = "Set1", direction = -1) +
+  labs(color="vs. Initial") +
+  scale_alpha_manual(values=c(0.1,1,0.1,0.1)) +
+  guides(alpha="none")
+
 ```
 
 
@@ -355,7 +477,7 @@ for(i in 2:length(ls_files)){
 }
 
 
-LS %>% mutate(parameter=params[id]) -> LS
+LS %>% mutate(parameter=parameter_key$parameter_name[id]) -> LS
 
 LS %>% 
   ggplot(aes(x=parameter,y=score_type)) +
@@ -376,14 +498,15 @@ LS %>%
   theme_minimal(base_size=16)+
   geom_tile(color="white",
             aes(fill=log10(value))) +
-  scale_fill_distiller(palette="RdGy",direction = 1) +
+  scale_fill_distiller(palette="RdBu",direction = 1) +
   theme(axis.text.x = element_text(angle=-45,vjust=0,hjust=0),
         legend.position="right",
         legend.title.position = "top",
         legend.direction = "horizontal",
         legend.title = element_text(size=12)) +
   coord_fixed() + xlab("") + ylab("") +
-  labs(fill="Log10(lengthscale)")
+  labs(fill="Log10(lengthscale)") +
+  guides(fill=guide_colorbar(direction = "vertical",reverse = T))
   
 ggsave(paste(GP_folder,paste("detailed_length_scales.png"),sep='/'),height = 6,width=8)
 
