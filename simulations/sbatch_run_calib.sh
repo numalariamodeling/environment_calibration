@@ -11,4 +11,7 @@
 
 module purge all
 
-/home/tmh6260/my_environments/pytorch_test/bin/python run_calib.py
+source activate /projects/b1139/environments/emodpy-torch
+cd /projects/b1139/ipti_pmc/environment_calibration/simulations
+
+python run_calib.py

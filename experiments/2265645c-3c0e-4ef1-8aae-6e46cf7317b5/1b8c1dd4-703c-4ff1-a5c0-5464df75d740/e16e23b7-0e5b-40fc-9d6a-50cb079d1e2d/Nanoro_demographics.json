@@ -1,0 +1,150 @@
+{
+   "Defaults": {
+      "IndividualAttributes": {
+         "AgeDistribution": {
+            "DistributionValues": [
+               0.0,
+               0.037470220000000005,
+               0.07349178666666667,
+               0.10821711333333332,
+               0.14169293000000002,
+               0.17396411333333334,
+               0.20507386,
+               0.23506306,
+               0.2639731666666667,
+               0.2918430733333333,
+               0.31871001,
+               0.3446102266666667,
+               0.3695781633333333,
+               0.3936469,
+               0.41684955333333334,
+               0.43921732,
+               0.53954497,
+               0.62307208,
+               0.69261197,
+               0.7505066533333333,
+               0.79870648,
+               0.8388348866666666,
+               0.8722436066666667,
+               0.90005774,
+               0.9232142466666667,
+               0.9424929533333333,
+               0.9585432500000001,
+               0.9719058733333333,
+               0.9830307866666667,
+               0.99229282,
+               1.0
+            ],
+            "NumDistributionAxes": 0,
+            "ResultScaleFactor": 365,
+            "ResultUnits": "years",
+            "ResultValues": [
+               0,
+               1,
+               2,
+               3,
+               4,
+               5,
+               6,
+               7,
+               8,
+               9,
+               10,
+               11,
+               12,
+               13,
+               14,
+               15,
+               20,
+               25,
+               30,
+               35,
+               40,
+               45,
+               50,
+               55,
+               60,
+               65,
+               70,
+               75,
+               80,
+               85,
+               90
+            ]
+         },
+         "AgeDistribution1": 0,
+         "AgeDistribution2": 18250,
+         "AgeDistributionFlag": 1,
+         "InitialPrevalence": 0,
+         "MortalityDistribution": {
+            "AxisNames": [
+               "gender",
+               "age"
+            ],
+            "AxisScaleFactors": [
+               1,
+               365
+            ],
+            "AxisUnits": [
+               "male=0,female=1",
+               "years"
+            ],
+            "PopulationGroups": [
+               [
+                  0,
+                  1
+               ],
+               [
+                  0
+               ]
+            ],
+            "ResultScaleFactor": 1,
+            "ResultUnits": "daily probability of dying",
+            "ResultValues": [
+               [
+                  0.0001041150088204928
+               ],
+               [
+                  0.0001041150088204928
+               ]
+            ]
+         },
+         "PrevalenceDist_Description": "Uniform draw from 0.2 to 0.2",
+         "PrevalenceDistribution1": 0.2,
+         "PrevalenceDistribution2": 0.2,
+         "PrevalenceDistributionFlag": 1,
+         "PrevalenceDistribution_Description": "Constant Initial Prevalence (0.2)",
+         "RiskDist_Description": "LogNormal distributed risk",
+         "RiskDistribution1": 0.0,
+         "RiskDistribution2": 1.6,
+         "RiskDistributionFlag": 5
+      },
+      "IndividualProperties": [],
+      "NodeAttributes": {
+         "Airport": 1,
+         "Altitude": 0,
+         "BirthRate": 0.10410958904109589,
+         "Region": 1,
+         "Seaport": 1
+      }
+   },
+   "Metadata": {
+      "Author": "tmh6260",
+      "DateCreated": "10/22/2024",
+      "IdReference": "Nanoro",
+      "NodeCount": 1,
+      "Tool": "emod-api"
+   },
+   "Nodes": [
+      {
+         "IndividualAttributes": {},
+         "NodeAttributes": {
+            "FacilityName": "Nanoro",
+            "InitialPopulation": 1000,
+            "Latitude": 12.68,
+            "Longitude": -2.19
+         },
+         "NodeID": 1
+      }
+   ]
+}
