@@ -1,5 +1,11 @@
-site,year,month,day,ref_prevalence
-Nanoro,2015,8,15,0.638404
-Nanoro,2016,1,15,0.5741445
-Nanoro,2016,5,15,0.3658537
-Nanoro,2017,1,15,0.4871795
+site,year,month,day,ref_prevalence,Age
+Aiyedade,2010,8,15,0,0.25
+Aiyedade,2010,8,15,0.638404,5
+Aiyedade,2015,1,15,0,0.25
+Aiyedade,2015,1,15,0.5741445,5
+Aiyedade,2018,5,15,0,0.25
+Aiyedade,2018,5,15,0.3658537,5
+Aiyedade,2021,1,15,0,0.25
+Aiyedade,2021,1,15,0.4871795,5
+Aiyedade, 2023,7,15,0,0.16
+Aiyedade, 2023,7,15,0.472727273,1.5
