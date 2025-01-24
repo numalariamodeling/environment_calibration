@@ -1,0 +1,41 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+
+#log files
+*.err
+*.out
+*.log
+simulations/log/*
+
+# Batch submission scripts
+
+wait_*.sh
+run_*.sh
+
+# Reference data (avoid overwrite)
+reference_datasets/
+
+# simulation_inputs
+simulation_inputs/
+
+# simulation_outputs
+simulation_outputs/
+
+# experiments
+experiments/
+
+# Logs and related files
+COMPS_log.log
+idmtool*.log
+log/
+output/
+simulations/log/
+
+# COMPS_ID files
+COMPS_ID/
+!COMPS_ID/version.txt
+
+README.html
+
+manifest.py
+sbatch_run_calib.py

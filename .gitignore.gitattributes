@@ -29,6 +29,7 @@ COMPS_log.log
 idmtool*.log
 log/
 output/
+simulations/log/
 
 # COMPS_ID files
 COMPS_ID/
