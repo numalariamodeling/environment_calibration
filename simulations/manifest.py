@@ -3,10 +3,10 @@
 from pathlib import Path
 import os
 
-VENV_PATH = '/home/tmh6260/my_environments/pytorch_test'
+VENV_PATH = '/home/upf3610/environments/pytorch_test_rwema'
 # SITE='Nanoro'
 SITE = 'Aiyedade'
-EXPERIMENT_LABEL=f"{SITE}_trial_run"
+EXPERIMENT_LABEL=f"{SITE}_trial_8"
 
 CURRENT_DIR = Path(__file__).resolve().parent
 PROJECT_DIR = CURRENT_DIR.parent
@@ -27,7 +27,8 @@ plugins_folder = DOWNLOAD_DIR / "reporter_plugins"
 # Create 'Assets' directory or change to a path you prefer. idmtools will upload files found here.
 assets_input_dir = CURRENT_DIR / "Assets"
 # analyzed_ouptut_path = PROJECT_DIR / "EMOD_validation_recalibration" / "simulation_output"
-comps_id_folder = CURRENT_DIR / "COMPS_ID"
+comps_id_folder = PROJECT_DIR/"simulations" / "COMPS_ID"
+# comps_id_folder = CURRENT_DIR / "COMPS_ID"
 suite_id_file = comps_id_folder / 'Suite'
 version_file = comps_id_folder / "version.txt"
 eradication_found = comps_id_folder / 'eradication_found'
