@@ -8,8 +8,8 @@ pop,1000,simulated population
 birth_rate,38,Crude birth rate for site
 prev0,0.2,Initial prevalence to supply to demographics file
 nSims,1,# of random seeds to simulate
-simulation_start_year,2000,Day 0 of simulation is Jan 1 of this year
-simulation_years,26,# of years to simulate (Jan 1- Dec 31)
+simulation_start_year,1960,Day 0 of simulation is Jan 1 of this year
+simulation_years,50,# of years to simulate (Jan 1- Dec 31)
 demographics_filepath,demographics_files/Aiyedade_demographics.json,<site>_demographics.json if using create_files.py
 NMF_filepath,nonmalarial_fevers/nmf_rates_generic.csv,blank if not applicable
 CM_filepath,cm/Aiyedade_case_management.csv,blank if not applicable
