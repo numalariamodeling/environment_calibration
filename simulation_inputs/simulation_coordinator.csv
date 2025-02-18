@@ -8,8 +8,8 @@ pop,1000,simulated population
 birth_rate,38,Crude birth rate for site
 prev0,0.2,Initial prevalence to supply to demographics file
 nSims,1,# of random seeds to simulate
-simulation_start_year,1960,Day 0 of simulation is Jan 1 of this year
-simulation_years,50,# of years to simulate (Jan 1- Dec 31)
+simulation_start_year,2000,Day 0 of simulation is Jan 1 of this year
+simulation_years,26,# of years to simulate (Jan 1- Dec 31)
 demographics_filepath,demographics_files/Aiyedade_demographics.json,<site>_demographics.json if using create_files.py
 NMF_filepath,nonmalarial_fevers/nmf_rates_generic.csv,blank if not applicable
 CM_filepath,cm/Aiyedade_case_management.csv,blank if not applicable
@@ -20,9 +20,11 @@ ITN_season_filepath,itn/Aiyedade_ITN_season.csv,"file describing seasonal patter
 vector_filepath,vectors/vectors.csv,file describing mix of vector species and their ecology
 prevalence_comparison,TRUE,include a measure of prevalence in scoring?
 prevalence_comparison_reference,Aiyedade_dhs_pfpr.csv,reference dataset for prevalence
+prevalence_comparison_reference_U2,Aiyedade_mc_pfpr.csv,reference dataset for prevalence
 prevalence_comparison_frequency,monthly,"""monthly"" or ""annual"" (not tested)"
 prevalence_comparison_diagnostic,Microscopy,"""PCR"" or ""Microscopy"" or ""RDT"""
 prevalence_comparison_agebin,5,agebin (within prevealence_comparison_reference) to use for comparison. NA if PCR.
+prevalence_comparison_agebin_U2,2,agebin (within prevealence_comparison_reference) to use for comparison. NA if PCR.
 incidence_comparison,TRUE,include a measure of clinical incidence in scoring?
 incidence_comparison_reference,aiyedade_month_incidence_cases.csv,reference dataset for incidence
 incidence_comparison_frequency,monthly,"""monthly"" or ""annual"""
