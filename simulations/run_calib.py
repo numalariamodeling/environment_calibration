@@ -51,6 +51,7 @@ param_key=pd.read_csv("parameter_key.csv")
 coord_df=load_coordinator_df()
 incidence_agebin=float(coord_df.at['incidence_comparison_agebin','value'])
 prevalence_agebin=float(coord_df.at['prevalence_comparison_agebin','value'])
+prevalence_agebin_U2=float(coord_df.at['prevalence_comparison_agebin_U2','value'])
 
 # Define the Problem, it must be a functor
 class Problem:
