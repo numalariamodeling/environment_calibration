@@ -28,190 +28,192 @@ git init
 # clone repository and submodules
 git clone <ssh path to your fork of the repository> --recursive
 ```
-
 <details>
+  <summary>Step 1: Create Virtual Environment (Updated Feb 28, 2025)</summary>
+<br>
+To start, create a virtual environment containing botorch, idmtools, emodpy, and other required packages.
 
-<summary>Step 1: Create Virtual Environment</summary>
+**Example:**  Creating an environment named  `250228_torch`  inside   `/projects/b1139/environments`  folder
 
-<br> To start, create a virtual environment containing botorch, idmtools, emodpy, and other required packages.
+    module purge all
+    module load mamba
+    mamba create --prefix=/projects/b1139/environments/250228_torch -c conda-forge pytorch=1.11[build=cuda112*] numpy python=3.9 cudatoolkit=11.2
 
-**Example:** Creating an environment named `pytorch_test` inside my home directory `my_environments` folder
+Running the three lines above produces the following output:
 
-``` bash
-module purge all
-module load mamba
-mamba create --prefix=/home/tmh6260/my_environments/pytorch_test -c conda-forge pytorch=1.11[build=cuda112*] numpy python=3.9 cudatoolkit=11.2
-```
-Running the three lines above will produce the following output:
+                      __    __    __    __
+                     /  \  /  \  /  \  /  \
+                    /    \/    \/    \/    \
+    ███████████████/  /██/  /██/  /██/  /████████████████████████
+                  /  / \   / \   / \   / \  \____
+                 /  /   \_/   \_/   \_/   \    o \__,
+                / _/                       \_____/  `
+                |/
+            ███╗   ███╗ █████╗ ███╗   ███╗██████╗  █████╗
+            ████╗ ████║██╔══██╗████╗ ████║██╔══██╗██╔══██╗
+            ██╔████╔██║███████║██╔████╔██║██████╔╝███████║
+            ██║╚██╔╝██║██╔══██║██║╚██╔╝██║██╔══██╗██╔══██║
+            ██║ ╚═╝ ██║██║  ██║██║ ╚═╝ ██║██████╔╝██║  ██║
+            ╚═╝     ╚═╝╚═╝  ╚═╝╚═╝     ╚═╝╚═════╝ ╚═╝  ╚═╝
+    
+            mamba (1.4.2) supported by @QuantStack
+    
+            GitHub:  https://github.com/mamba-org/mamba
+            Twitter: https://twitter.com/QuantStack
+    
+    █████████████████████████████████████████████████████████████
+    
+    
+    Looking for: ['pytorch=1.11[build=cuda112*]', 'numpy', 'python=3.9', 'cudatoolkit=11.2']
+    
+    error    libmamba Could not open lockfile '/hpc/software/mamba/23.1.0/pkgs/cache/cache.lock'
+    error    libmamba Could not open lockfile '/hpc/software/mamba/23.1.0/pkgs/cache/cache.lock'
+    warning  libmamba Could not parse state file: Could not load cache state: [json.exception.type_error.302] type must be string, but is null
+    warning  libmamba Could not remove state file "/hpc/software/mamba/23.1.0/pkgs/cache/09cdf8bf.state.json": Permission denied
+    conda-forge/noarch                                  19.8MB @   4.9MB/s  4.4s
+    conda-forge/linux-64                                46.3MB @   4.6MB/s 10.6s
+    Transaction
+    
+      Prefix: /projects/b1139/environments/250228_torch
+    
+      Updating specs:
+    
+       - pytorch=1.11[build=cuda112*]
+       - numpy
+       - python=3.9
+       - cudatoolkit=11.2
+    
+    
+      Package                Version  Build                  Channel                    Size
+    ──────────────────────────────────────────────────────────────────────────────────────────
+      Install:
+    ──────────────────────────────────────────────────────────────────────────────────────────
+    
+      + _libgcc_mutex            0.1  conda_forge            conda-forge/linux-64     Cached
+      + _openmp_mutex            4.5  2_kmp_llvm             conda-forge/linux-64     Cached
+      + bzip2                  1.0.8  h4bc722e_7             conda-forge/linux-64     Cached
+      + ca-certificates    2024.8.30  hbcca054_0             conda-forge/linux-64     Cached
+      + cffi                  1.17.1  py39h15c3d72_0         conda-forge/linux-64     Cached
+      + cuda-version            11.2  hb11dac2_3             conda-forge/noarch       Cached
+      + cudatoolkit           11.2.2  hc23eb0c_13            conda-forge/linux-64     Cached
+      + cudnn               8.9.7.29  hbc23b4c_3             conda-forge/linux-64     Cached
+      + ld_impl_linux-64        2.43  h712a8e2_2             conda-forge/linux-64      669kB
+      + libblas                3.9.0  16_linux64_mkl         conda-forge/linux-64     Cached
+      + libcblas               3.9.0  16_linux64_mkl         conda-forge/linux-64     Cached
+      + libffi                 3.4.2  h7f98852_5             conda-forge/linux-64     Cached
+      + libgcc                14.2.0  h77fa898_1             conda-forge/linux-64      849kB
+      + libgcc-ng             14.2.0  h69a702a_1             conda-forge/linux-64       54kB
+      + libhwloc              2.11.1  default_hecaa2ac_1000  conda-forge/linux-64     Cached
+      + libiconv                1.17  hd590300_2             conda-forge/linux-64     Cached
+      + liblapack              3.9.0  16_linux64_mkl         conda-forge/linux-64     Cached
+      + libnsl                 2.0.1  hd590300_0             conda-forge/linux-64     Cached
+      + libprotobuf           3.20.3  h3eb15da_0             conda-forge/linux-64     Cached
+      + libsqlite             3.47.0  hadc24fc_1             conda-forge/linux-64      875kB
+      + libstdcxx             14.2.0  hc0a3c3a_1             conda-forge/linux-64        4MB
+      + libstdcxx-ng          14.2.0  h4852527_1             conda-forge/linux-64       54kB
+      + libuuid               2.38.1  h0b41bf4_0             conda-forge/linux-64     Cached
+      + libxcrypt             4.4.36  hd590300_1             conda-forge/linux-64     Cached
+      + libxml2               2.13.4  h064dc61_2             conda-forge/linux-64      689kB
+      + libzlib                1.3.1  hb9d3cd8_2             conda-forge/linux-64       61kB
+      + llvm-openmp           19.1.3  h024ca30_0             conda-forge/linux-64        3MB
+      + magma                  2.5.4  hc72dce7_4             conda-forge/linux-64     Cached
+      + mkl                 2022.2.1  h6508926_16999         conda-forge/linux-64     Cached
+      + nccl                2.23.4.1  h03a54cd_2             conda-forge/linux-64      134MB
+      + ncurses                  6.5  he02047a_1             conda-forge/linux-64     Cached
+      + ninja                 1.12.1  h297d8ca_0             conda-forge/linux-64     Cached
+      + numpy                 1.26.4  py39h474f0d3_0         conda-forge/linux-64     Cached
+      + openssl                3.3.2  hb9d3cd8_0             conda-forge/linux-64     Cached
+      + pip                   24.3.1  pyh8b19718_0           conda-forge/noarch          1MB
+      + pycparser               2.22  pyhd8ed1ab_0           conda-forge/noarch       Cached
+      + python                3.9.20  h13acc7a_1_cpython     conda-forge/linux-64       24MB
+      + python_abi               3.9  5_cp39                 conda-forge/linux-64     Cached
+      + pytorch               1.11.0  cuda112py39ha0cca9b_1  conda-forge/linux-64     Cached
+      + readline                 8.2  h8228510_1             conda-forge/linux-64     Cached
+      + setuptools            75.3.0  pyhd8ed1ab_0           conda-forge/noarch        780kB
+      + sleef                    3.7  h1b44611_0             conda-forge/linux-64        2MB
+      + tbb                2021.13.0  h84d6215_0             conda-forge/linux-64     Cached
+      + tk                    8.6.13  noxft_h4845f30_101     conda-forge/linux-64     Cached
+      + typing_extensions     4.12.2  pyha770c72_0           conda-forge/noarch       Cached
+      + tzdata                 2024b  hc8b5060_0             conda-forge/noarch        122kB
+      + wheel                 0.44.0  pyhd8ed1ab_0           conda-forge/noarch       Cached
+      + xz                     5.2.6  h166bdaf_0             conda-forge/linux-64     Cached
+    
+      Summary:
+    
+      Install: 48 packages
+    
+      Total download: 172MB
+    
+    ──────────────────────────────────────────────────────────────────────────────────────────
+    
+    
+    Confirm changes: [Y/n] **Y**
 
-```bash
+When the prompt appears asking you to Confirm changes: [Y/n].  **Enter 'Y'** and the following output should show.
 
-                  __    __    __    __
-                 /  \  /  \  /  \  /  \
-                /    \/    \/    \/    \
-███████████████/  /██/  /██/  /██/  /████████████████████████
-              /  / \   / \   / \   / \  \____
-             /  /   \_/   \_/   \_/   \    o \__,
-            / _/                       \_____/  `
-            |/
-        ███╗   ███╗ █████╗ ███╗   ███╗██████╗  █████╗
-        ████╗ ████║██╔══██╗████╗ ████║██╔══██╗██╔══██╗
-        ██╔████╔██║███████║██╔████╔██║██████╔╝███████║
-        ██║╚██╔╝██║██╔══██║██║╚██╔╝██║██╔══██╗██╔══██║
-        ██║ ╚═╝ ██║██║  ██║██║ ╚═╝ ██║██████╔╝██║  ██║
-        ╚═╝     ╚═╝╚═╝  ╚═╝╚═╝     ╚═╝╚═════╝ ╚═╝  ╚═╝
+    libzlib                                             61.0kB @ 214.5kB/s  0.3s
+    
+    Downloading and Extracting Packages
+    tzdata                                             122.4kB @ 273.1kB/s  0.1s
+    Preparing transaction: done
+    Verifying transaction: done━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 171.6MB / 171.6MB                            2.9s
+    Executing transaction: \ By downloading and using the CUDA Toolkit conda packages, you accept the terms and conditions of the CUDA End User License Agreement (EULA): https://docs.nvidia.com/cuda/eula/index.html
+    [+] 8.2s
+    \ By downloading and using the cuDNN conda packages, you accept the terms and conditions of the NVIDIA cuDNN EULA -━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 171.6MB / 171.6MB                            2.9s
+      https://docs.nvidia.com/deeplearning/cudnn/sla/index.html
+    [+] 8.1s
+    / wnloading      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 171.6MB / 171.6MB                            2.9s
+    done
+    python                                              23.7MB @  26.0MB/s  0.4s
+    To activate this environment, use                  133.5MB @  46.1MB/s  2.4s
+    [+] 7.7s
+         $ mamba activate /projects/b1139/environments/250228_torch━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 171.6MB / 171.6MB                            2.9s
+    
+    To deactivate an active environment, use
+    
+         $ mamba deactivate
 
-        mamba (1.4.2) supported by @QuantStack
+Then, activate your virtual environment.
 
-        GitHub:  https://github.com/mamba-org/mamba
-        Twitter: https://twitter.com/QuantStack
+    source activate /projects/b1139/environments/250228_torch
 
-█████████████████████████████████████████████████████████████
+Install 2 additional packages using conda:
 
+    conda install icu=75.1
+    conda install zstd=1.5.6
 
-Looking for: ['pytorch=1.11[build=cuda112*]', 'numpy', 'python=3.9', 'cudatoolkit=11.2']
+Next, `pip` install emodpy-malaria (this also installs emod-api and emodpy) . As of February 2025, the framework is compatible with **emodpy_malaria version 3.4** .
 
-error    libmamba Could not open lockfile '/hpc/software/mamba/23.1.0/pkgs/cache/cache.lock'
-error    libmamba Could not open lockfile '/hpc/software/mamba/23.1.0/pkgs/cache/cache.lock'
-warning  libmamba Could not parse state file: Could not load cache state: [json.exception.type_error.302] type must be string, but is null
-warning  libmamba Could not remove state file "/hpc/software/mamba/23.1.0/pkgs/cache/09cdf8bf.state.json": Permission denied
-conda-forge/noarch                                  19.8MB @   4.9MB/s  4.4s
-conda-forge/linux-64                                46.3MB @   4.6MB/s 10.6s
-Transaction
+    pip install emodpy-malaria==3.4 --ignore-installed --index-url=https://packages.idmod.org/api/pypi/pypi-production/simple
 
-  Prefix: /home/tmh6260/my_environments/pytorch_test
+The following packages should also be automatically installed with emodpy-malaria... 
 
-  Updating specs:
+> Installing collected packages: xmlrunner, pytz, parse, emod-malaria,
+> zipp, xdg, wheel, urllib3, tzdata, typing-extensions, tqdm, tomli,
+> threadpoolctl, tabulate, soupsieve, six, pyyaml, pyparsing, pycparser,
+> prodict, pluggy, pillow, packaging, numpy, natsort, more-itertools,
+> MarkupSafe, lz4, kiwisolver, joblib, jeepney, iniconfig, idna,
+> humanfriendly, graphviz, geographiclib, future, fonttools, filelock,
+> exceptiongroup, diskcache, cycler, click, charset-normalizer, certifi,
+> backports.tarfile, backoff, astor, shapely, scipy, requests,
+> python-dateutil, pytest, pyproj, jinja2, jaraco.functools,
+> jaraco.context, jaraco.classes, importlib-resources,
+> importlib_metadata, contourpy, coloredlogs, cffi, beautifulsoup4,
+> astunparse, scikit-learn, pyCOMPS, pandas, matplotlib, cryptography,
+> bs4, SecretStorage, idmtools, emod-api, keyring,
+> idmtools-platform-comps, idmtools-models, emodpy, emodpy-malaria
 
-   - pytorch=1.11[build=cuda112*]
-   - numpy
-   - python=3.9
-   - cudatoolkit=11.2
+ 
+Next, `pip` install idmtools_platform_slurm. As of February 2025, the framework is compatible with **idmtools_platform_slurm version 1.7.11**.
 
+    pip install idmtools-platform-slurm==1.7.11 --index-url=https://packages.idmod.org/api/pypi/pypi-production/simple
 
-  Package                Version  Build                  Channel                    Size
-──────────────────────────────────────────────────────────────────────────────────────────
-  Install:
-──────────────────────────────────────────────────────────────────────────────────────────
+Finally, install remaining required packages:
 
-  + _libgcc_mutex            0.1  conda_forge            conda-forge/linux-64     Cached
-  + _openmp_mutex            4.5  2_kmp_llvm             conda-forge/linux-64     Cached
-  + bzip2                  1.0.8  h4bc722e_7             conda-forge/linux-64     Cached
-  + ca-certificates    2024.8.30  hbcca054_0             conda-forge/linux-64     Cached
-  + cffi                  1.17.1  py39h15c3d72_0         conda-forge/linux-64     Cached
-  + cuda-version            11.2  hb11dac2_3             conda-forge/noarch       Cached
-  + cudatoolkit           11.2.2  hc23eb0c_13            conda-forge/linux-64     Cached
-  + cudnn               8.9.7.29  hbc23b4c_3             conda-forge/linux-64     Cached
-  + ld_impl_linux-64        2.43  h712a8e2_2             conda-forge/linux-64      669kB
-  + libblas                3.9.0  16_linux64_mkl         conda-forge/linux-64     Cached
-  + libcblas               3.9.0  16_linux64_mkl         conda-forge/linux-64     Cached
-  + libffi                 3.4.2  h7f98852_5             conda-forge/linux-64     Cached
-  + libgcc                14.2.0  h77fa898_1             conda-forge/linux-64      849kB
-  + libgcc-ng             14.2.0  h69a702a_1             conda-forge/linux-64       54kB
-  + libhwloc              2.11.1  default_hecaa2ac_1000  conda-forge/linux-64     Cached
-  + libiconv                1.17  hd590300_2             conda-forge/linux-64     Cached
-  + liblapack              3.9.0  16_linux64_mkl         conda-forge/linux-64     Cached
-  + libnsl                 2.0.1  hd590300_0             conda-forge/linux-64     Cached
-  + libprotobuf           3.20.3  h3eb15da_0             conda-forge/linux-64     Cached
-  + libsqlite             3.47.0  hadc24fc_1             conda-forge/linux-64      875kB
-  + libstdcxx             14.2.0  hc0a3c3a_1             conda-forge/linux-64        4MB
-  + libstdcxx-ng          14.2.0  h4852527_1             conda-forge/linux-64       54kB
-  + libuuid               2.38.1  h0b41bf4_0             conda-forge/linux-64     Cached
-  + libxcrypt             4.4.36  hd590300_1             conda-forge/linux-64     Cached
-  + libxml2               2.13.4  h064dc61_2             conda-forge/linux-64      689kB
-  + libzlib                1.3.1  hb9d3cd8_2             conda-forge/linux-64       61kB
-  + llvm-openmp           19.1.3  h024ca30_0             conda-forge/linux-64        3MB
-  + magma                  2.5.4  hc72dce7_4             conda-forge/linux-64     Cached
-  + mkl                 2022.2.1  h6508926_16999         conda-forge/linux-64     Cached
-  + nccl                2.23.4.1  h03a54cd_2             conda-forge/linux-64      134MB
-  + ncurses                  6.5  he02047a_1             conda-forge/linux-64     Cached
-  + ninja                 1.12.1  h297d8ca_0             conda-forge/linux-64     Cached
-  + numpy                 1.26.4  py39h474f0d3_0         conda-forge/linux-64     Cached
-  + openssl                3.3.2  hb9d3cd8_0             conda-forge/linux-64     Cached
-  + pip                   24.3.1  pyh8b19718_0           conda-forge/noarch          1MB
-  + pycparser               2.22  pyhd8ed1ab_0           conda-forge/noarch       Cached
-  + python                3.9.20  h13acc7a_1_cpython     conda-forge/linux-64       24MB
-  + python_abi               3.9  5_cp39                 conda-forge/linux-64     Cached
-  + pytorch               1.11.0  cuda112py39ha0cca9b_1  conda-forge/linux-64     Cached
-  + readline                 8.2  h8228510_1             conda-forge/linux-64     Cached
-  + setuptools            75.3.0  pyhd8ed1ab_0           conda-forge/noarch        780kB
-  + sleef                    3.7  h1b44611_0             conda-forge/linux-64        2MB
-  + tbb                2021.13.0  h84d6215_0             conda-forge/linux-64     Cached
-  + tk                    8.6.13  noxft_h4845f30_101     conda-forge/linux-64     Cached
-  + typing_extensions     4.12.2  pyha770c72_0           conda-forge/noarch       Cached
-  + tzdata                 2024b  hc8b5060_0             conda-forge/noarch        122kB
-  + wheel                 0.44.0  pyhd8ed1ab_0           conda-forge/noarch       Cached
-  + xz                     5.2.6  h166bdaf_0             conda-forge/linux-64     Cached
+    pip install gpytorch
+    pip install botorch==0.8.1
+    pip install seaborn
 
-  Summary:
-
-  Install: 48 packages
-
-  Total download: 172MB
-
-──────────────────────────────────────────────────────────────────────────────────────────
-
-
-Confirm changes: [Y/n] **Y**
-```
-
-When the prompt appears asking you to Confirm changes: [Y/n]. **Enter 'Y'**
-
-``` bash
-libzlib                                             61.0kB @ 214.5kB/s  0.3s
-
-Downloading and Extracting Packages
-tzdata                                             122.4kB @ 273.1kB/s  0.1s
-Preparing transaction: done
-Verifying transaction: done━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 171.6MB / 171.6MB                            2.9s
-Executing transaction: \ By downloading and using the CUDA Toolkit conda packages, you accept the terms and conditions of the CUDA End User License Agreement (EULA): https://docs.nvidia.com/cuda/eula/index.html
-[+] 8.2s
-\ By downloading and using the cuDNN conda packages, you accept the terms and conditions of the NVIDIA cuDNN EULA -━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 171.6MB / 171.6MB                            2.9s
-  https://docs.nvidia.com/deeplearning/cudnn/sla/index.html
-[+] 8.1s
-/ wnloading      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 171.6MB / 171.6MB                            2.9s
-done
-python                                              23.7MB @  26.0MB/s  0.4s
-To activate this environment, use                  133.5MB @  46.1MB/s  2.4s
-[+] 7.7s
-     $ mamba activate /home/tmh6260/my_environments/pytorch_test━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 171.6MB / 171.6MB                            2.9s
-
-To deactivate an active environment, use
-
-     $ mamba deactivate
-```
-
-Activate your virtual environment
-
-``` bash
-source activate /home/tmh6260/my_environments/pytorch_test
-```
-
-Add 2 additional conda packages
-
-``` bash
-conda install icu=75.1
-conda install zstd=1.5.6
-```
-
-Some packages need to be installed or specified using `pip`. To add them:
-
-``` bash
-# pip install others emodpy-malaria and idmtools
-pip install emodpy-malaria --ignore-installed --index-url=https://packages.idmod.org/api/pypi/pypi-production/simple 
-
-# copy idm_tools_platform_slurm v1.7.11 from emodpy-torch environment, along with dist-info
-cp -r /projects/b1139/environments/emodpy-torch/lib/python3.9/site-packages/idmtools_platform_slurm/ /<PATH TO YOUR ENVIRONMENT>/lib/python3.9/site-packages/idmtools_platform_slurm
-cp -r /projects/b1139/environments/emodpy-torch/lib/python3.9/site-packages/idmtools_platform_slurm-1.7.11.dist-info /<PATH TO YOUR ENVIRONMENT>/lib/python3.9/site-packages/idmtools_platform_slurm-1.7.11.dist-info
-
-# pip install others from requirements.txt
-pip install -r /projects/b1139/environments/emodpy-torch/requirements.txt
-
-# pip install a few more required packages 
-pip install gpytorch
-pip install botorch==0.8.1
-pip install seaborn
-```
 
 </details>
 
