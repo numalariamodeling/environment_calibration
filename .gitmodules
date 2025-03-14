@@ -1,6 +1,6 @@
 [submodule "calibration_common"]
 	path = calibration_common
-	url = https://github.com/tobias-holden/calibration_common.git
+	url = https://github.com/numalariamodeling/calibration_common.git
 [submodule "environment_calibration_common"]
 	path = environment_calibration_common
 	url = https://github.com/numalariamodeling/environment_calibration_common.git
