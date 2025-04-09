@@ -8,6 +8,7 @@ import pandas as pd
 import numpy as np
 import torch
 from gpytorch.constraints import GreaterThan
+from datetime import datetime
 # from local directory
 import manifest as manifest
 sys.path.append("../calibration_common")
@@ -28,8 +29,24 @@ from run_full_comparison import plot_allAge_prevalence,plot_incidence,compute_sc
 
 ####################################
 # Experiment details - this is the only section you need to edit with the script
-Site=manifest.SITE
-exp_label = manifest.EXPERIMENT_LABEL
+####################################
+# Experiment details - this is the only section you need to edit with the script
+
+site_index =2 # TODO add site_index as an argument to parse
+site_df = pd.read_csv(manifest.site_coordinator_path)
+site_df = site_df[site_df.index == site_index]
+site_df = site_df.reset_index(drop=True)
+Site= site_df.site[0]
+exp_label = f'{Site}_trial_{datetime.now().strftime("%Y%m%d_%H%M%S")}'
+####################################
+
+## Overwrite in coord_df (workaround for least edits throughout environmental calibration framework)
+coord_df = pd.read_csv(manifest.simulation_coordinator_path)
+coord_df.loc[coord_df['option'] == 'site', 'value'] = site_coord.site.iloc[0]
+coord_df.loc[coord_df['option'] == 'lat', 'value'] = str(site_coord.lat.iloc[0])
+coord_df.loc[coord_df['option'] == 'lon', 'value'] = str(site_coord.lon.iloc[0])
+coord_df.to_csv(manifest.simulation_coordinator_path, index=False)
+
 ####################################
 
 output_dir = f"output/{exp_label}"
