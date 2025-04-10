@@ -5,8 +5,9 @@ import os
 
 VENV_PATH = '/home/upf3610/environments/pytorch_test_rwema'
 # SITE='Nanoro'
-SITE = 'Aiyedade'
-EXPERIMENT_LABEL=f"{SITE}_trial_29"
+sites = ['Atakumosa West', 'Aiyedade', 'Ede South', 'Egbedore', 'Ife North', 'Iwo', 'Obokun', 'Irewole']
+SITE = sites[0]
+EXPERIMENT_LABEL=f"{SITE}_trial_1"
 
 CURRENT_DIR = Path(__file__).resolve().parent
 PROJECT_DIR = CURRENT_DIR.parent
