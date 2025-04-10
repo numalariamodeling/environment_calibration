@@ -4,10 +4,6 @@ from pathlib import Path
 import os
 
 VENV_PATH = '/home/upf3610/environments/pytorch_test_rwema'
-# SITE='Nanoro'
-sites = ['Atakumosa West', 'Aiyedade', 'Ede South', 'Egbedore', 'Ife North', 'Iwo', 'Obokun', 'Irewole']
-SITE = sites[0]
-EXPERIMENT_LABEL=f"{SITE}_trial_1"
 
 CURRENT_DIR = Path(__file__).resolve().parent
 PROJECT_DIR = CURRENT_DIR.parent
@@ -18,6 +14,7 @@ os.makedirs(job_directory, exist_ok=True)
 input_files_path = PROJECT_DIR / "simulation_inputs"
 simulation_coordinator_path = input_files_path / "simulation_coordinator.csv"
 calibration_coordinator_path = input_files_path / "calibration_coordinator.csv"
+site_coordinator_path = input_files_path / "site_coordinator.csv"
 
 DOWNLOAD_DIR = CURRENT_DIR / "download" / "bin_230614_PT"
 # The script is going to use this to store the downloaded schema file. Create 'download' directory or change to your preferred (existing) location.
