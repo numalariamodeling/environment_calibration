@@ -3,7 +3,7 @@
 from pathlib import Path
 import os
 
-VENV_PATH = '/home/upf3610/environments/pytorch_test_rwema'
+VENV_PATH = '/gpfs/home/upf3610/environments/pytorch_test_rwema'
 
 CURRENT_DIR = Path(__file__).resolve().parent
 PROJECT_DIR = CURRENT_DIR.parent
@@ -54,7 +54,10 @@ node_group_private = 'idm_48cores'
 node_group = 'idm_abcd'
 
 # This is the path to the sisf image used to run EMOD
-SIF_PATH = "--bind /projects /projects/b1139/images/dtk_run_rocky_py39.sif"
+# SIF_PATH = "--bind /projects /projects/b1139/images/dtk_run_rocky_py39.sif"
+
+# SIF_PATH = "--bind /projects /projects/b1139/images/dtk_run_rocky_py39.sif"
+SIF_PATH = "--bind /projects /gpfs/projects/b1139/images/dtk_run_rocky_py39.sif"
 
 # ========================================================
 """
