@@ -2,6 +2,7 @@
 # standard packages
 import os
 import sys
+from pathlib import Path
 import shutil
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -37,7 +38,8 @@ site_df = pd.read_csv(manifest.site_coordinator_path)
 site_df = site_df[site_df.index == site_index]
 site_df = site_df.reset_index(drop=True)
 Site= site_df.site[0]
-exp_label = f'{Site}_{datetime.now().strftime("%Y%m%d_%H%M%S")}'
+Site_no_space = Site.replace('','_')
+exp_label = f'{Site_no_space}_{datetime.now().strftime("%Y%m%d_%H%M%S")}'
 # exp_label = f'{Site}_trial_30'
 # {datetime.now().strftime("%Y%m%d_%H%M%S")}
 ####################################
@@ -203,7 +205,7 @@ class Problem:
             clean_COMPS_ID()
         return torch.tensor(xc,dtype=torch.float64), torch.tensor(yc)
 
-problem = Problem(workdir=f"output/{exp_label}")
+problem = Problem(workdir=Path(f"output/{exp_label}"))
 
 # at beginning of workflow, cleanup all sbatch scripts for analysis
 clean_analyzers()
