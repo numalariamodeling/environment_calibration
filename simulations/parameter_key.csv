@@ -1,5 +1,5 @@
 parameter_id,parameter_label,parameter_name,min,max,transform,class,description,type,emod_min,emod_max,emod_default,team_default
 1,Temperature_Shift,Temperature_Shift,-5.0,5.0,none,environmental,NA,double,NA,NA,NA,NA
-2,CONST_Multiplier,CONST_Multiplier,-4.0,4.0,log,environmental,NA,double,NA,NA,NA,NA
-3,TEMPR_Multiplier,TEMPR_Multiplier,-4.0,4.0,log,environmental,NA,double,NA,NA,NA,NA
-4,WATEV_Multiplier,WATEV_Multiplier,-4.0,4.0,log,environmental,NA,double,NA,NA,NA,NA
+2,CONST_Multiplier,CONST_Multiplier,-8.0,4.0,log,environmental,NA,double,NA,NA,NA,NA
+3,TEMPR_Multiplier,TEMPR_Multiplier,-8.0,4.0,log,environmental,NA,double,NA,NA,NA,NA
+4,WATEV_Multiplier,WATEV_Multiplier,-8.0,4.0,log,environmental,NA,double,NA,NA,NA,NA
