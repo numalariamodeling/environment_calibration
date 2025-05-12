@@ -26,7 +26,7 @@
    },
    "Metadata": {
       "Author": "upf3610",
-      "DateCreated": "03/12/2025",
+      "DateCreated": "05/12/2025",
       "IdReference": "Gridded world grump2.5arcmin",
       "NodeCount": 1,
       "Tool": "emod-api"
@@ -36,9 +36,9 @@
          "IndividualAttributes": {},
          "NodeAttributes": {
             "FacilityName": 1,
-            "InitialPopulation": 1000,
-            "Latitude": 7.4666648,
-            "Longitude": 4.3499986
+            "InitialPopulation": 5000,
+            "Latitude": 7.780756528,
+            "Longitude": 4.762644386
          },
          "NodeID": 1
       }

@@ -6,19 +6,19 @@
     "IdReference": "Aiyedade",
     "WeatherCellCount": 1,
     "UpdateResolution": "CLIMATE_UPDATE_DAY",
-    "OriginalDataYears": "2010-2010",
+    "OriginalDataYears": "2010-2019",
     "StartDayOfYear": "January 1",
     "DataProvenance": "From ERA5 hourly files (downloaded with C3S, March 2019) and aggregated by day.",
     "Resolution": "15arcmin",
-    "UpperLatitude": 7.4666648,
-    "LeftLongitude": 4.3499986,
-    "BottomLatitude": 7.4666648,
-    "RightLongitude": 4.3499986,
+    "UpperLatitude": 7.311528264,
+    "LeftLongitude": 4.303748506,
+    "BottomLatitude": 7.311528264,
+    "RightLongitude": 4.303748506,
     "OffsetEntryCount": 1,
     "NumberDTKNodes": 1,
     "NodeCount": 1,
-    "DatavalueCount": 365,
-    "DatavaluePerCell": 365
+    "DatavalueCount": 3651,
+    "DatavaluePerCell": 3651
   },
   "NodeOffsets": "0000000100000000"
 }
