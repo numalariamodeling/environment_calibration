@@ -2,6 +2,7 @@
 # standard packages
 import os
 import sys
+from pathlib import Path
 import shutil
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -50,6 +51,7 @@ coord_df.loc[coord_df['option'] == 'site', 'value'] = site_df.site.iloc[0]
 coord_df.loc[coord_df['option'] == 'lat', 'value'] = str(site_df.lat.iloc[0])
 coord_df.loc[coord_df['option'] == 'lon', 'value'] = str(site_df.lon.iloc[0])
 coord_df.loc[coord_df['option'] == 'exp_label', 'value'] = str(exp_label)
+coord_df.loc[coord_df['option'] == 'demographics_filepath', 'value'] = f'demographics_files/{Site}_demographics.json'
 coord_df.to_csv(manifest.simulation_coordinator_path, index=False)
 
 ####################################
@@ -204,7 +206,7 @@ class Problem:
             clean_COMPS_ID()
         return torch.tensor(xc,dtype=torch.float64), torch.tensor(yc)
 
-problem = Problem(workdir=f"output/{exp_label}")
+problem = Problem(workdir=Path(f"output/{exp_label}"))
 
 # at beginning of workflow, cleanup all sbatch scripts for analysis
 clean_analyzers()
