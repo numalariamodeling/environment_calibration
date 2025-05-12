@@ -4,6 +4,7 @@ from pathlib import Path
 import os
 
 VENV_PATH = '/gpfs/home/upf3610/environments/pytorch_test_rwema'
+#VENV_PATH = '/gpfs/projects/b1139/environments/emodpy-torch/'
 
 CURRENT_DIR = Path(__file__).resolve().parent
 PROJECT_DIR = CURRENT_DIR.parent
