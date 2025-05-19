@@ -25,7 +25,7 @@ from translate_parameters import translate_parameters
 from helpers import load_coordinator_df
 from my_func import my_func as myFunc
 sys.path.append("../environment_calibration_common/compare_to_data")
-from run_full_comparison import plot_allAge_prevalence,plot_incidence,compute_scores_across_site,save_rangeEIR,save_AnnualIncidence,plot_pfpr_microscopy 
+from run_full_comparison import plot_allAge_prevalence,plot_incidence,compute_scores_across_site,save_rangeEIR,save_AnnualIncidence,plot_pfpr_microscopy_combined
 
 
 ####################################
@@ -33,12 +33,13 @@ from run_full_comparison import plot_allAge_prevalence,plot_incidence,compute_sc
 ####################################
 # Experiment details - this is the only section you need to edit with the script
 
-site_index =6 # TODO add site_index as an argument to parse
+site_index =0 # TODO add site_index as an argument to parse
 site_df = pd.read_csv(manifest.site_coordinator_path)
 site_df = site_df[site_df.index == site_index]
 site_df = site_df.reset_index(drop=True)
 Site= site_df.site[0]
 Site_no_space = Site.replace(' ','_')
+
 exp_label = f'{Site_no_space}_{datetime.now().strftime("%Y%m%d_%H%M%S")}'
 # exp_label = f'{Site}_trial_30'
 # {datetime.now().strftime("%Y%m%d_%H%M%S")}
@@ -153,10 +154,10 @@ class Problem:
                                            plt_dir=os.path.join(f"{self.workdir}/LF_{self.n}"), 
                                            wdir=os.path.join(f"{self.workdir}/LF_{self.n}"))
                 if(coord_df.at["prevalence_comparison_diagnostic","value"]=="Microscopy"):
-                    plot_pfpr_microscopy(site=Site,
+                    plot_pfpr_microscopy_combined(site=Site,
                                          plt_dir=os.path.join(f"{self.workdir}/LF_{self.n}"),
-                                         wdir=os.path.join(f"{self.workdir}/LF_{self.n}"),
-                                         agebin=prevalence_agebin)
+                                         wdir=os.path.join(f"{self.workdir}/LF_{self.n}"))
+
             shutil.copytree(f"{manifest.simulation_output_filepath}",f"{self.workdir}/LF_{self.n}/SO")
             self.n += 1
             np.savetxt(f"{self.workdir}/emod.n.txt", [self.n])
@@ -188,10 +189,10 @@ class Problem:
                                                plt_dir=os.path.join(f"{self.workdir}/LF_{self.n}"), 
                                                wdir=os.path.join(f"{self.workdir}/LF_{self.n}"))
                     if(coord_df.at["prevalence_comparison_diagnostic","value"]=="Microscopy"):
-                        plot_pfpr_microscopy(site=Site,
+                        plot_pfpr_microscopy_combined(site=Site,
                                              plt_dir=os.path.join(f"{self.workdir}/LF_{self.n}"),
-                                             wdir=os.path.join(f"{self.workdir}/LF_{self.n}"),
-                                             agebin=prevalence_agebin)
+                                             wdir=os.path.join(f"{self.workdir}/LF_{self.n}"))
+                                             
                 np.savetxt(f"{self.workdir}/emod.ymax.txt", [self.ymax])
                 np.savetxt(f"{self.workdir}/LF_{self.n}/emod.ymax.txt", [self.ymax])
             Y0['round'] = [self.n] * len(Y0)
