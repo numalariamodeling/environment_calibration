@@ -19,7 +19,7 @@ Before following the steps below, please **fork** this repository and clone it t
 For Quest users:
 
 ``` bash
-#navigate to your home directory or desired project location (ex. /projects/<your_net_id>/)
+#navigate to your home directory or desired project location (ex. /gpfs/projects/<your_net_id>/)
 cd ~
 
 # initialize git
@@ -33,11 +33,11 @@ git clone <ssh path to your fork of the repository> --recursive
 <br>
 To start, create a virtual environment containing botorch, idmtools, emodpy, and other required packages.
 
-**Example:**  Creating an environment named  `250228_torch`  inside   `/projects/b1139/environments`  folder
+**Example:**  Creating an environment named  `<insert environment_name>`  inside   `/gpfs/projects/b1139/environments`  folder
 
     module purge all
     module load mamba
-    mamba create --prefix=/projects/b1139/environments/250228_torch -c conda-forge pytorch=1.11[build=cuda112*] numpy python=3.9 cudatoolkit=11.2
+    mamba create --prefix=/gpfs/projects/b1139/environments/<environment_name> -c conda-forge pytorch=1.11[build=cuda112*] numpy python=3.9 cudatoolkit=11.2
 
 Running the three lines above produces the following output:
 
@@ -74,7 +74,7 @@ Running the three lines above produces the following output:
     conda-forge/linux-64                                46.3MB @   4.6MB/s 10.6s
     Transaction
     
-      Prefix: /projects/b1139/environments/250228_torch
+      Prefix: /gpfs/projects/b1139/environments/250228_torch
     
       Updating specs:
     
@@ -167,7 +167,7 @@ When the prompt appears asking you to Confirm changes: [Y/n].  **Enter 'Y'** and
     python                                              23.7MB @  26.0MB/s  0.4s
     To activate this environment, use                  133.5MB @  46.1MB/s  2.4s
     [+] 7.7s
-         $ mamba activate /projects/b1139/environments/250228_torch━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 171.6MB / 171.6MB                            2.9s
+         $ mamba activate /gpfs/projects/b1139/environments/<environment_name>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 171.6MB / 171.6MB                            2.9s
     
     To deactivate an active environment, use
     
@@ -175,7 +175,8 @@ When the prompt appears asking you to Confirm changes: [Y/n].  **Enter 'Y'** and
 
 Then, activate your virtual environment.
 
-    source activate /projects/b1139/environments/250228_torch
+    module load mamba
+    source activate /gpfs/projects/b1139/environments/<environment_name>
 
 Install 2 additional packages using conda:
 
